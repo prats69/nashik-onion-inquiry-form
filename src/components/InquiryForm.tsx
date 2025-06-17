@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -52,7 +51,7 @@ const InquiryForm = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Get Your <span className="text-onion-600">Custom Quote</span>
+            Get Your <span className="text-navy-600">Custom Quote</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Ready to import premium Nashik Red Onions? Fill out the form below and we'll provide you with a competitive quote.
@@ -166,7 +165,7 @@ const InquiryForm = () => {
 
                   <Button 
                     type="submit" 
-                    className="w-full h-12 bg-onion-600 hover:bg-onion-700 text-white font-semibold text-lg"
+                    className="w-full h-12 bg-navy-600 hover:bg-navy-700 text-white font-semibold text-lg"
                   >
                     Submit Inquiry
                   </Button>
@@ -182,8 +181,8 @@ const InquiryForm = () => {
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-onion-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-5 h-5 text-onion-600" />
+                  <div className="w-10 h-10 bg-navy-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-5 h-5 text-navy-600" />
                   </div>
                   <div>
                     <p className="font-medium text-gray-900">Phone</p>
@@ -193,8 +192,8 @@ const InquiryForm = () => {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-5 h-5 text-blue-600" />
+                  <div className="w-10 h-10 bg-turquoise-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Mail className="w-5 h-5 text-turquoise-600" />
                   </div>
                   <div>
                     <p className="font-medium text-gray-900">Email</p>
@@ -215,24 +214,24 @@ const InquiryForm = () => {
               </CardContent>
             </Card>
 
-            <Card className="shadow-lg bg-gradient-to-br from-onion-50 to-earth-50">
+            <Card className="shadow-lg bg-gradient-to-br from-navy-50 to-turquoise-50">
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Why Choose Us?</h3>
                 <ul className="space-y-3 text-sm text-gray-600">
                   <li className="flex items-start gap-2">
-                    <div className="w-2 h-2 bg-onion-600 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-2 h-2 bg-navy-600 rounded-full mt-2 flex-shrink-0"></div>
                     <span>Direct from farmers with no middlemen</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-2 h-2 bg-onion-600 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-2 h-2 bg-navy-600 rounded-full mt-2 flex-shrink-0"></div>
                     <span>Competitive pricing and flexible payment terms</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-2 h-2 bg-onion-600 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-2 h-2 bg-navy-600 rounded-full mt-2 flex-shrink-0"></div>
                     <span>24/7 customer support and order tracking</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <div className="w-2 h-2 bg-onion-600 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-2 h-2 bg-navy-600 rounded-full mt-2 flex-shrink-0"></div>
                     <span>Timely delivery with proper documentation</span>
                   </li>
                 </ul>

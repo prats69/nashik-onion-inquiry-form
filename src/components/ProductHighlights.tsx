@@ -15,12 +15,12 @@ const ProductHighlights = () => {
       description: "All products meet international export standards and food safety regulations."
     },
     {
-      icon: <Globe className="w-8 h-8 text-onion-600" />,
+      icon: <Globe className="w-8 h-8 text-navy-600" />,
       title: "Global Reach",
       description: "Supplying to 25+ countries worldwide with reliable logistics partnerships."
     },
     {
-      icon: <CheckCircle className="w-8 h-8 text-earth-600" />,
+      icon: <CheckCircle className="w-8 h-8 text-turquoise-600" />,
       title: "Quality Assurance",
       description: "Every batch is tested for quality, size consistency, and shelf life before export."
     }
@@ -40,7 +40,7 @@ const ProductHighlights = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Why Choose Our <span className="text-onion-600">Nashik Red Onions</span>?
+            Why Choose Our <span className="text-navy-600">Nashik Red Onions</span>?
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Our red onions from Nashik are renowned for their superior quality, rich flavor, and excellent storage life.

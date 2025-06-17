@@ -1,4 +1,3 @@
-
 import { MapPin, Phone, Mail, Globe } from "lucide-react";
 
 const Footer = () => {
@@ -7,7 +6,7 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-onion-400">Nashik Fresh Exports</h3>
+            <h3 className="text-2xl font-bold text-turquoise-400">Nashik Fresh Exports</h3>
             <p className="text-gray-300">
               Premium exporter of fresh fruits and vegetables from India, specializing in Nashik Red Onions for global markets.
             </p>
