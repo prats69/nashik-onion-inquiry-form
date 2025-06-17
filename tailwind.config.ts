@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -18,6 +19,9 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'poppins': ['Poppins', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -61,6 +65,30 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				onion: {
+					50: '#fef7f7',
+					100: '#fdf0f0',
+					200: '#f9d8d8',
+					300: '#f4b8b8',
+					400: '#ec8888',
+					500: '#dc2626',
+					600: '#b91c1c',
+					700: '#991b1b',
+					800: '#7f1d1d',
+					900: '#701a1a',
+				},
+				earth: {
+					50: '#f9f7f4',
+					100: '#f1ede4',
+					200: '#e3d5c3',
+					300: '#d1b896',
+					400: '#bc9667',
+					500: '#a67c52',
+					600: '#8b6442',
+					700: '#6f4f36',
+					800: '#5a412f',
+					900: '#4a3729',
 				}
 			},
 			borderRadius: {
@@ -84,11 +112,22 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'fade-in': {
+					from: {
+						opacity: '0',
+						transform: 'translateY(20px)'
+					},
+					to: {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fade-in 0.6s ease-out'
 			}
 		}
 	},
