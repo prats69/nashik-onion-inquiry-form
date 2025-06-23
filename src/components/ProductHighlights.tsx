@@ -28,9 +28,9 @@ const ProductHighlights = () => {
 
   const specifications = [
     { label: "Variety", value: "Nashik Red Onion" },
-    { label: "Size", value: "25-40mm, 45mm+, 55mm+, 70mm+" },
-    { label: "Packaging", value: "9, 10, 18, 20 kg red mesh bags | 25, 26, 50 kg jute bags" },
-    { label: "Shelf Life", value: "4-6 months" },
+    { label: "Sizes Available", value: "25-40mm, 45mm+, 55mm+, 70mm+" },
+    { label: "Packaging Available", value: "9, 10, 18, 20 kg red mesh bags | 25, 26, 50 kg jute bags" },
+    { label: "Shelf Life", value: "6-8 months" },
     { label: "Moisture Content", value: "Max 12%" },
     { label: "Loading Capacity", value: "29 MT per reefer container" }
   ];
