@@ -89,7 +89,7 @@ const Hero = () => {
             <div className="relative">
               <div className="aspect-square bg-gradient-to-br from-navy-100 to-turquoise-100 rounded-3xl p-8 shadow-2xl">
                 <img 
-                  src="/Onions.png" 
+                  src="/onions.png" 
                   alt="Fresh Agricultural Produce"
                   className="w-full h-full object-cover rounded-2xl shadow-lg"
                 />
