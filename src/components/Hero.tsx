@@ -28,7 +28,7 @@ const Hero = () => {
 
       {/* Hero Content */}
       <div className="flex-1 flex items-center">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?ixlib=rb-4.0.3')] bg-cover bg-center opacity-10"></div>
+        <div className="absolute inset-0 bg-[url('/onions.png')] bg-cover bg-center opacity-10"></div>
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
