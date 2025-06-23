@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -68,131 +67,12 @@ const InquiryForm = () => {
                 <CardTitle className="text-2xl text-gray-900">Inquiry Form</CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Full Name *</Label>
-                      <Input
-                        id="name"
-                        value={formData.name}
-                        onChange={(e) => handleChange("name", e.target.value)}
-                        required
-                        className="h-12"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="company">Company Name *</Label>
-                      <Input
-                        id="company"
-                        value={formData.company}
-                        onChange={(e) => handleChange("company", e.target.value)}
-                        required
-                        className="h-12"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Email Address *</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => handleChange("email", e.target.value)}
-                        required
-                        className="h-12"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="phone">Phone Number *</Label>
-                      <Input
-                        id="phone"
-                        value={formData.phone}
-                        onChange={(e) => handleChange("phone", e.target.value)}
-                        required
-                        className="h-12"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="country">Country *</Label>
-                      <Select value={formData.country} onValueChange={(value) => handleChange("country", value)}>
-                        <SelectTrigger className="h-12">
-                          <SelectValue placeholder="Select your country" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-white z-50">
-                          <SelectItem value="uae">United Arab Emirates</SelectItem>
-                          <SelectItem value="saudi">Saudi Arabia</SelectItem>
-                          <SelectItem value="qatar">Qatar</SelectItem>
-                          <SelectItem value="kuwait">Kuwait</SelectItem>
-                          <SelectItem value="bahrain">Bahrain</SelectItem>
-                          <SelectItem value="oman">Oman</SelectItem>
-                          <SelectItem value="malaysia">Malaysia</SelectItem>
-                          <SelectItem value="singapore">Singapore</SelectItem>
-                          <SelectItem value="sri-lanka">Sri Lanka</SelectItem>
-                          <SelectItem value="bangladesh">Bangladesh</SelectItem>
-                          <SelectItem value="other">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="product">Product of Interest *</Label>
-                      <Select value={formData.product} onValueChange={(value) => handleChange("product", value)}>
-                        <SelectTrigger className="h-12">
-                          <SelectValue placeholder="Select product" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-white z-50">
-                          <SelectItem value="red-onions">Red Onions</SelectItem>
-                          <SelectItem value="garlic">Fresh Garlic</SelectItem>
-                          <SelectItem value="banana">Cavendish Banana</SelectItem>
-                          <SelectItem value="green-chilly">G4 Green Chilly</SelectItem>
-                          <SelectItem value="tomatoes">Fresh Tomatoes</SelectItem>
-                          <SelectItem value="mango-pulp">Mango Pulp</SelectItem>
-                          <SelectItem value="makhana">Makhana (Plain/Flavoured)</SelectItem>
-                          <SelectItem value="multiple">Multiple Products</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="quantity">Required Quantity *</Label>
-                    <Select value={formData.quantity} onValueChange={(value) => handleChange("quantity", value)}>
-                      <SelectTrigger className="h-12">
-                        <SelectValue placeholder="Select quantity range" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-white z-50">
-                        <SelectItem value="5-20">5-20 MT</SelectItem>
-                        <SelectItem value="20-50">20-50 MT</SelectItem>
-                        <SelectItem value="50-100">50-100 MT</SelectItem>
-                        <SelectItem value="100-200">100-200 MT</SelectItem>
-                        <SelectItem value="200-500">200-500 MT</SelectItem>
-                        <SelectItem value="500+">500+ MT</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Additional Requirements</Label>
-                    <Textarea
-                      id="message"
-                      value={formData.message}
-                      onChange={(e) => handleChange("message", e.target.value)}
-                      placeholder="Please specify packaging preferences, delivery timeline, preferred incoterms, or any other requirements..."
-                      className="min-h-24"
-                    />
-                  </div>
-
-                  <Button 
-                    type="submit" 
-                    className="w-full h-12 bg-navy-600 hover:bg-navy-700 text-white font-semibold text-lg"
-                  >
-                    Submit Inquiry
-                  </Button>
-                </form>
+                <iframe 
+                  aria-label='Inquiry Form' 
+                  frameBorder="0" 
+                  style={{height:'500px', width:'100%', border:'none'}} 
+                  src='https://forms.zohopublic.in/zokoglobal1/form/onionLP/formperma/tUZ5aifmJKoL32cgjCnvjIncWKjVVJr3IImyUndG6OU'
+                />
               </CardContent>
             </Card>
           </div>
