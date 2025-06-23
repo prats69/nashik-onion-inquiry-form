@@ -40,7 +40,7 @@ const OtherProducts = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Our Premium <span className="text-navy-600">Product Range</span>
+            Our Other <span className="text-navy-600">Products</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             From fresh vegetables to processed foods, we export a wide variety of premium agricultural products from India.

@@ -9,42 +9,48 @@ const Testimonials = () => {
       country: "UAE",
       message: "Excellent quality onions! Very fresh and well-packaged. Zoko Group delivers exactly what they promise.",
       rating: 5,
-      date: "2 days ago"
+      date: "2 days ago",
+      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?ixlib=rb-4.0.3&w=300&h=600"
     },
     {
       name: "Sarah Johnson",
       country: "UK",
       message: "First time importing from India and Zoko Group made it so easy! Great support throughout the process.",
       rating: 5,
-      date: "1 week ago"
+      date: "1 week ago",
+      image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?ixlib=rb-4.0.3&w=300&h=600"
     },
     {
       name: "Mohammad Hassan",
       country: "Qatar",
       message: "Been working with them for 3 years. Consistent quality and reliable delivery. Highly recommended!",
       rating: 5,
-      date: "3 days ago"
+      date: "3 days ago",
+      image: "https://images.unsplash.com/photo-1493962853295-0fd70327578a?ixlib=rb-4.0.3&w=300&h=600"
     },
     {
       name: "Lisa Chen",
       country: "Singapore",
       message: "The mango pulp quality is outstanding! Perfect for our food processing business.",
       rating: 5,
-      date: "5 days ago"
+      date: "5 days ago",
+      image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?ixlib=rb-4.0.3&w=300&h=600"
     },
     {
       name: "David Miller",
       country: "Australia",
       message: "Competitive prices and excellent customer service. They handle all documentation perfectly.",
       rating: 5,
-      date: "1 week ago"
+      date: "1 week ago",
+      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?ixlib=rb-4.0.3&w=300&h=600"
     },
     {
       name: "Fatima Al-Zahra",
       country: "Bahrain",
       message: "Fresh garlic arrived in perfect condition. Fast shipping and great communication.",
       rating: 5,
-      date: "4 days ago"
+      date: "4 days ago",
+      image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?ixlib=rb-4.0.3&w=300&h=600"
     }
   ];
 
@@ -64,24 +70,35 @@ const Testimonials = () => {
           {testimonials.map((testimonial, index) => (
             <Card key={index} className="hover:shadow-lg transition-shadow bg-white">
               <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                    <MessageCircle className="w-5 h-5 text-green-600" />
+                <div className="flex gap-4 mb-4">
+                  <div className="w-16 h-28 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                    <img 
+                      src={testimonial.image} 
+                      alt="WhatsApp screenshot"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div className="flex-1">
-                    <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
-                    <p className="text-sm text-gray-500">{testimonial.country}</p>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    ))}
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                        <MessageCircle className="w-4 h-4 text-green-600" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-gray-900 text-sm">{testimonial.name}</h4>
+                        <p className="text-xs text-gray-500">{testimonial.country}</p>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
                 
-                <p className="text-gray-700 mb-3 italic">"{testimonial.message}"</p>
+                <p className="text-gray-700 mb-3 italic text-sm">"{testimonial.message}"</p>
                 
-                <div className="flex items-center justify-between text-sm text-gray-500">
+                <div className="flex items-center justify-between text-xs text-gray-500">
                   <span>WhatsApp Message</span>
                   <span>{testimonial.date}</span>
                 </div>

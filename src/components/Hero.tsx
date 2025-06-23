@@ -39,10 +39,10 @@ const Hero = () => {
                   <span>From Surat, Gujarat, India</span>
                 </div>
                 <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                  Premium <span className="text-navy-600">Fresh Produce</span> for Global Markets
+                  Premium <span className="text-navy-600">Red Onions</span> for Global Markets
                 </h1>
                 <p className="text-xl text-gray-600 leading-relaxed">
-                  Export quality fruits and vegetables directly from India's finest agricultural regions. 
+                  Export quality red onions directly from India's finest agricultural regions. 
                   We guarantee freshness, competitive pricing, and reliable supply chain for international buyers.
                 </p>
               </div>
@@ -83,7 +83,7 @@ const Hero = () => {
                   WhatsApp Us
                 </Button>
               </div>
-              <p className="text-sm text-gray-500">Minimum order quantity varies by product</p>
+              <p className="text-sm text-gray-500">Minimum order quantity: 29 MT (1 container)</p>
             </div>
 
             <div className="relative">

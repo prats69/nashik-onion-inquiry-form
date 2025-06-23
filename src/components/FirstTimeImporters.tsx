@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Ship, FileText, Home, MessageCircle } from "lucide-react";
+import { CheckCircle, Ship, FileText, Home, MessageCircle, CreditCard } from "lucide-react";
 
 const FirstTimeImporters = () => {
   const scrollToInquiry = () => {
@@ -35,6 +35,17 @@ const FirstTimeImporters = () => {
     }
   ];
 
+  const paymentTerms = [
+    {
+      term: "100% Advance",
+      description: "Full payment before shipment - ideal for first-time importers wanting complete peace of mind"
+    },
+    {
+      term: "30% Advance + 70% LC at Sight",
+      description: "Pay 30% upfront, remaining 70% through Letter of Credit. LC at Sight means payment is made immediately when documents are presented to your bank, ensuring secure transaction for both parties."
+    }
+  ];
+
   return (
     <section className="py-20 bg-gradient-to-br from-turquoise-50 to-navy-50">
       <div className="container mx-auto px-4">
@@ -48,7 +59,7 @@ const FirstTimeImporters = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+        <div className="grid lg:grid-cols-2 gap-12 items-start mb-16">
           <div className="space-y-8">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 bg-turquoise-100 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -99,26 +110,51 @@ const FirstTimeImporters = () => {
           </div>
 
           <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Choose Your Preferred Shipping Terms</h3>
-            {incoterms.map((incoterm, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 bg-navy-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Ship className="w-5 h-5 text-navy-600" />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="font-bold text-navy-600 text-lg">{incoterm.term}</span>
-                        <span className="text-gray-500">•</span>
-                        <span className="font-medium text-gray-700">{incoterm.name}</span>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">Choose Your Preferred Shipping Terms</h3>
+              <div className="space-y-4">
+                {incoterms.map((incoterm, index) => (
+                  <Card key={index} className="hover:shadow-lg transition-shadow">
+                    <CardContent className="p-6">
+                      <div className="flex items-start gap-4">
+                        <div className="w-10 h-10 bg-navy-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <Ship className="w-5 h-5 text-navy-600" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="font-bold text-navy-600 text-lg">{incoterm.term}</span>
+                            <span className="text-gray-500">•</span>
+                            <span className="font-medium text-gray-700">{incoterm.name}</span>
+                          </div>
+                          <p className="text-gray-600">{incoterm.description}</p>
+                        </div>
                       </div>
-                      <p className="text-gray-600">{incoterm.description}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">Flexible Payment Terms</h3>
+              <div className="space-y-4">
+                {paymentTerms.map((payment, index) => (
+                  <Card key={index} className="hover:shadow-lg transition-shadow">
+                    <CardContent className="p-6">
+                      <div className="flex items-start gap-4">
+                        <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <CreditCard className="w-5 h-5 text-green-600" />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-green-600 text-lg mb-2">{payment.term}</h4>
+                          <p className="text-gray-600">{payment.description}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

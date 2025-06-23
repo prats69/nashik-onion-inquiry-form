@@ -28,11 +28,11 @@ const ProductHighlights = () => {
 
   const specifications = [
     { label: "Variety", value: "Nashik Red Onion" },
-    { label: "Size", value: "40-70mm, 70mm+" },
-    { label: "Packaging", value: "50kg Mesh Bags, 25kg Cartons" },
+    { label: "Size", value: "25-40mm, 45mm+, 55mm+, 70mm+" },
+    { label: "Packaging", value: "9, 10, 18, 20 kg red mesh bags | 25, 26, 50 kg jute bags" },
     { label: "Shelf Life", value: "4-6 months" },
     { label: "Moisture Content", value: "Max 12%" },
-    { label: "Loading Capacity", value: "26-28 MT per container" }
+    { label: "Loading Capacity", value: "29 MT per reefer container" }
   ];
 
   return (
@@ -64,7 +64,7 @@ const ProductHighlights = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <h3 className="text-3xl font-bold text-gray-900">Product Specifications</h3>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               {specifications.map((spec, index) => (
                 <div key={index} className="bg-white p-4 rounded-lg shadow-sm border">
                   <p className="text-sm font-medium text-gray-500">{spec.label}</p>
