@@ -42,7 +42,7 @@ const Testimonials = () => {
       message: "Competitive prices and excellent customer service. They handle all documentation perfectly.",
       rating: 5,
       date: "1 week ago",
-      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?ixlib=rb-4.0.3&w=300&h=600"
+      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&w=300&h=600"
     },
     {
       name: "Fatima Al-Zahra",
@@ -50,7 +50,7 @@ const Testimonials = () => {
       message: "Fresh garlic arrived in perfect condition. Fast shipping and great communication.",
       rating: 5,
       date: "4 days ago",
-      image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?ixlib=rb-4.0.3&w=300&h=600"
+      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&w=300&h=600"
     }
   ];
 
@@ -70,35 +70,36 @@ const Testimonials = () => {
           {testimonials.map((testimonial, index) => (
             <Card key={index} className="hover:shadow-lg transition-shadow bg-white">
               <CardContent className="p-6">
-                <div className="flex gap-4 mb-4">
-                  <div className="w-16 h-28 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                {/* Mobile Screenshot Image - Much Larger */}
+                <div className="mb-6">
+                  <div className="w-full max-w-sm mx-auto bg-gray-100 rounded-xl overflow-hidden shadow-md">
                     <img 
                       src={testimonial.image} 
-                      alt="WhatsApp screenshot"
-                      className="w-full h-full object-cover"
+                      alt="WhatsApp conversation screenshot"
+                      className="w-full h-96 object-cover"
                     />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                        <MessageCircle className="w-4 h-4 text-green-600" />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-gray-900 text-sm">{testimonial.name}</h4>
-                        <p className="text-xs text-gray-500">{testimonial.country}</p>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-                        ))}
-                      </div>
-                    </div>
                   </div>
                 </div>
                 
-                <p className="text-gray-700 mb-3 italic text-sm">"{testimonial.message}"</p>
+                {/* Customer Info */}
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                    <MessageCircle className="w-5 h-5 text-green-600" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
+                    <p className="text-sm text-gray-500">{testimonial.country}</p>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                </div>
                 
-                <div className="flex items-center justify-between text-xs text-gray-500">
+                <p className="text-gray-700 mb-4 italic">"{testimonial.message}"</p>
+                
+                <div className="flex items-center justify-between text-sm text-gray-500">
                   <span>WhatsApp Message</span>
                   <span>{testimonial.date}</span>
                 </div>
