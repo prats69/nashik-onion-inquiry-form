@@ -76,7 +76,7 @@ const ProductHighlights = () => {
 
           <div className="relative">
             <img 
-              src="https://images.unsplash.com/photo-1472396961693-142e6e269027?ixlib=rb-4.0.3" 
+              src="/onions2.jpg" 
               alt="Onion farming in Nashik"
               className="rounded-2xl shadow-2xl w-full h-96 object-cover"
             />
