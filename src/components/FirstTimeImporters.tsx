@@ -42,7 +42,7 @@ const FirstTimeImporters = () => {
     },
     {
       term: "30% Advance + 70% LC at Sight",
-      description: "Pay 30% upfront, remaining 70% through Letter of Credit. LC at Sight means payment is made immediately when documents are presented to your bank, ensuring secure transaction for both parties."
+      description: "Pay 30% upfront, remaining 70% through Letter of Credit issued by your Bank. You pay your Bank, your Bank pays our Bank once we submit the Bill of lading, Packing list, etc documents to our Bank."
     }
   ];
 
