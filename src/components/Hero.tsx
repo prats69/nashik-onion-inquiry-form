@@ -1,20 +1,27 @@
+
 import { Button } from "@/components/ui/button";
-import { MapPin, Award, Truck } from "lucide-react";
+import { MapPin, Award, Truck, MessageCircle } from "lucide-react";
 
 const Hero = () => {
   const scrollToInquiry = () => {
     document.getElementById('inquiry-form')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const openWhatsApp = () => {
+    window.open('https://wa.me/919998694346', '_blank');
+  };
+
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-navy-50 via-white to-turquoise-50 flex flex-col">
-      {/* Company Logo Placeholder */}
+      {/* Company Logo */}
       <div className="w-full bg-white py-4 shadow-sm">
         <div className="container mx-auto px-4">
           <div className="flex justify-center">
-            <div className="w-48 h-16 bg-gray-200 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-400">
-              <span className="text-gray-500 font-medium">Company Logo</span>
-            </div>
+            <img 
+              src="/zoko-logo.png" 
+              alt="Zoko Group of Companies" 
+              className="h-16 w-auto"
+            />
           </div>
         </div>
       </div>
@@ -29,13 +36,13 @@ const Hero = () => {
               <div className="space-y-4">
                 <div className="flex items-center gap-2 text-navy-600 font-medium">
                   <MapPin className="w-5 h-5" />
-                  <span>From Nashik, Maharashtra, India</span>
+                  <span>From Surat, Gujarat, India</span>
                 </div>
                 <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                  Premium <span className="text-navy-600">Red Onions</span> for Global Markets
+                  Premium <span className="text-navy-600">Fresh Produce</span> for Global Markets
                 </h1>
                 <p className="text-xl text-gray-600 leading-relaxed">
-                  Export quality Nashik Red Onions directly from India's finest agricultural region. 
+                  Export quality fruits and vegetables directly from India's finest agricultural regions. 
                   We guarantee freshness, competitive pricing, and reliable supply chain for international buyers.
                 </p>
               </div>
@@ -57,26 +64,33 @@ const Hero = () => {
                   <div className="flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mx-auto mb-3">
                     <MapPin className="w-8 h-8 text-green-600" />
                   </div>
-                  <p className="text-sm font-medium text-gray-700">Nashik Origin</p>
+                  <p className="text-sm font-medium text-gray-700">Direct from Farms</p>
                 </div>
               </div>
 
-              <div className="space-y-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   onClick={scrollToInquiry}
                   className="bg-navy-600 hover:bg-navy-700 text-white px-8 py-4 text-lg font-semibold rounded-lg transition-colors duration-300"
                 >
                   Get Quote Now
                 </Button>
-                <p className="text-sm text-gray-500">Minimum order quantity: 20 MT</p>
+                <Button 
+                  onClick={openWhatsApp}
+                  className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg font-semibold rounded-lg transition-colors duration-300 flex items-center gap-2"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  WhatsApp Us
+                </Button>
               </div>
+              <p className="text-sm text-gray-500">Minimum order quantity varies by product</p>
             </div>
 
             <div className="relative">
               <div className="aspect-square bg-gradient-to-br from-navy-100 to-turquoise-100 rounded-3xl p-8 shadow-2xl">
                 <img 
                   src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?ixlib=rb-4.0.3" 
-                  alt="Fresh Nashik Red Onions"
+                  alt="Fresh Agricultural Produce"
                   className="w-full h-full object-cover rounded-2xl shadow-lg"
                 />
               </div>

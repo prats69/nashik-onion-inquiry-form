@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +17,7 @@ const InquiryForm = () => {
     email: "",
     phone: "",
     country: "",
+    product: "",
     quantity: "",
     message: ""
   });
@@ -37,6 +39,7 @@ const InquiryForm = () => {
       email: "",
       phone: "",
       country: "",
+      product: "",
       quantity: "",
       message: ""
     });
@@ -54,7 +57,7 @@ const InquiryForm = () => {
             Get Your <span className="text-navy-600">Custom Quote</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Ready to import premium Nashik Red Onions? Fill out the form below and we'll provide you with a competitive quote.
+            Ready to import premium Indian produce? Fill out the form below and we'll provide you with a competitive quote.
           </p>
         </div>
 
@@ -136,20 +139,40 @@ const InquiryForm = () => {
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="quantity">Required Quantity (MT) *</Label>
-                      <Select value={formData.quantity} onValueChange={(value) => handleChange("quantity", value)}>
+                      <Label htmlFor="product">Product of Interest *</Label>
+                      <Select value={formData.product} onValueChange={(value) => handleChange("product", value)}>
                         <SelectTrigger className="h-12">
-                          <SelectValue placeholder="Select quantity" />
+                          <SelectValue placeholder="Select product" />
                         </SelectTrigger>
                         <SelectContent className="bg-white z-50">
-                          <SelectItem value="20-50">20-50 MT</SelectItem>
-                          <SelectItem value="50-100">50-100 MT</SelectItem>
-                          <SelectItem value="100-200">100-200 MT</SelectItem>
-                          <SelectItem value="200-500">200-500 MT</SelectItem>
-                          <SelectItem value="500+">500+ MT</SelectItem>
+                          <SelectItem value="red-onions">Red Onions</SelectItem>
+                          <SelectItem value="garlic">Fresh Garlic</SelectItem>
+                          <SelectItem value="banana">Cavendish Banana</SelectItem>
+                          <SelectItem value="green-chilly">G4 Green Chilly</SelectItem>
+                          <SelectItem value="tomatoes">Fresh Tomatoes</SelectItem>
+                          <SelectItem value="mango-pulp">Mango Pulp</SelectItem>
+                          <SelectItem value="makhana">Makhana (Plain/Flavoured)</SelectItem>
+                          <SelectItem value="multiple">Multiple Products</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="quantity">Required Quantity *</Label>
+                    <Select value={formData.quantity} onValueChange={(value) => handleChange("quantity", value)}>
+                      <SelectTrigger className="h-12">
+                        <SelectValue placeholder="Select quantity range" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white z-50">
+                        <SelectItem value="5-20">5-20 MT</SelectItem>
+                        <SelectItem value="20-50">20-50 MT</SelectItem>
+                        <SelectItem value="50-100">50-100 MT</SelectItem>
+                        <SelectItem value="100-200">100-200 MT</SelectItem>
+                        <SelectItem value="200-500">200-500 MT</SelectItem>
+                        <SelectItem value="500+">500+ MT</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
 
                   <div className="space-y-2">
@@ -158,7 +181,7 @@ const InquiryForm = () => {
                       id="message"
                       value={formData.message}
                       onChange={(e) => handleChange("message", e.target.value)}
-                      placeholder="Please specify packaging preferences, delivery timeline, or any other requirements..."
+                      placeholder="Please specify packaging preferences, delivery timeline, preferred incoterms, or any other requirements..."
                       className="min-h-24"
                     />
                   </div>
@@ -186,8 +209,7 @@ const InquiryForm = () => {
                   </div>
                   <div>
                     <p className="font-medium text-gray-900">Phone</p>
-                    <p className="text-gray-600">+91 9876543210</p>
-                    <p className="text-gray-600">+91 8765432109</p>
+                    <p className="text-gray-600">+91 9998694346</p>
                   </div>
                 </div>
 
@@ -197,8 +219,7 @@ const InquiryForm = () => {
                   </div>
                   <div>
                     <p className="font-medium text-gray-900">Email</p>
-                    <p className="text-gray-600">export@nashikfresh.com</p>
-                    <p className="text-gray-600">sales@nashikfresh.com</p>
+                    <p className="text-gray-600">exports@zokogroups.com</p>
                   </div>
                 </div>
 
@@ -208,7 +229,7 @@ const InquiryForm = () => {
                   </div>
                   <div>
                     <p className="font-medium text-gray-900">Address</p>
-                    <p className="text-gray-600">123 Export Plaza, Nashik Road, Nashik - 422101, Maharashtra, India</p>
+                    <p className="text-gray-600">Sai Shrushty Complex, Palanpur Gam, Surat, Gujarat 395009, India</p>
                   </div>
                 </div>
               </CardContent>
