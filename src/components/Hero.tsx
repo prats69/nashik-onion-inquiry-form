@@ -96,7 +96,7 @@ const Hero = () => {
               </div>
               <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-2xl shadow-xl border">
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-navy-600">15+</p>
+                  <p className="text-3xl font-bold text-navy-600">11+</p>
                   <p className="text-sm text-gray-600">Years Experience</p>
                 </div>
               </div>
