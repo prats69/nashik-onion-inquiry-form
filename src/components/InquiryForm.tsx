@@ -70,7 +70,7 @@ const InquiryForm = () => {
                 <iframe 
                   aria-label='Inquiry Form' 
                   frameBorder="0" 
-                  style={{height: '100%', width:'100%', border:'none'}} 
+                  style={{height: '600px', width:'100%', border:'none'}} 
                   src='https://forms.zohopublic.in/zokoglobal1/form/onionLP/formperma/tUZ5aifmJKoL32cgjCnvjIncWKjVVJr3IImyUndG6OU'
                 />
               </CardContent>
