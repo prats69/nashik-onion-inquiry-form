@@ -62,7 +62,7 @@ const InquiryForm = () => {
 
         <div className="grid lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2">
-            <Card className="shadow-xl">
+            <Card className="shadow-none">
               {/* <CardHeader>
                 <CardTitle className="text-2xl text-gray-900">Inquiry Form</CardTitle>
               </CardHeader>
