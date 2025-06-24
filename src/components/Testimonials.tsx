@@ -11,24 +11,19 @@ const Testimonials = () => {
       image: "/1.png"
     },
     {
-      
       country: "UK",
-
       rating: 5,
       date: "1 week ago",
       image: "/2.png"
     },
     {
-      
       country: "Qatar",
-
       rating: 5,
       date: "3 days ago",
       image: "/3.png"
     },
     {
       country: "Singapore",
-
       rating: 5,
       date: "5 days ago",
       image: "/4.png"
@@ -41,7 +36,6 @@ const Testimonials = () => {
     },
     {
       country: "Bahrain",
-
       rating: 5,
       date: "4 days ago",
       image: "/7.png"
@@ -81,7 +75,6 @@ const Testimonials = () => {
                     <MessageCircle className="w-5 h-5 text-green-600" />
                   </div>
                   <div className="flex-1">
-                    <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
                     <p className="text-sm text-gray-500">{testimonial.country}</p>
                   </div>
                   <div className="flex items-center gap-1">
@@ -90,8 +83,6 @@ const Testimonials = () => {
                     ))}
                   </div>
                 </div>
-                
-                <p className="text-gray-700 mb-4 italic">"{testimonial.message}"</p>
                 
                 <div className="flex items-center justify-between text-sm text-gray-500">
                   <span>WhatsApp Message</span>
