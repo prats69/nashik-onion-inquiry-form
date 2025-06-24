@@ -73,7 +73,7 @@ const InquiryForm = () => {
                 minHeight: '100vh', // Full viewport height as minimum
                 height: 'auto', // Adjusts to content if less than viewport
                 border: 'none', 
-                overflow: 'hidden' 
+
               }}
                 src='https://forms.zohopublic.in/zokoglobal1/form/onionLP/formperma/tUZ5aifmJKoL32cgjCnvjIncWKjVVJr3IImyUndG6OU'
                 />
