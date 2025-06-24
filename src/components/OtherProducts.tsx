@@ -6,32 +6,32 @@ const OtherProducts = () => {
     {
       name: "Fresh Garlic",
       description: "Premium quality garlic with strong aroma and long shelf life",
-      image: "https://images.unsplash.com/photo-1471193945509-9ad0617afabf?ixlib=rb-4.0.3"
+      image: "/white-garlic-500x500.webp"
     },
     {
       name: "Cavendish Banana",
       description: "Export quality bananas with perfect ripeness and sweetness",
-      image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-4.0.3"
+      image: "/banana.png"
     },
     {
       name: "G4 Green Chilly",
       description: "Spicy and fresh green chillies perfect for international markets",
-      image: "https://images.unsplash.com/photo-1583158775393-b0b71b7e6a7c?ixlib=rb-4.0.3"
+      image: "/greenchilly.png"
     },
     {
       name: "Fresh Tomatoes",
       description: "Juicy, red tomatoes harvested at peak ripeness",
-      image: "https://images.unsplash.com/photo-1546470427-e26264be0b0b?ixlib=rb-4.0.3"
+      image: "/tomato.png"
     },
     {
       name: "Mango Pulp",
       description: "100% natural mango pulp processed with international standards",
-      image: "https://images.unsplash.com/photo-1553279027-83d2b48116f8?ixlib=rb-4.0.3"
+      image: "/13.png"
     },
     {
       name: "Makhana (Plain & Flavoured)",
       description: "Premium fox nuts available in plain and various flavors",
-      image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?ixlib=rb-4.0.3"
+      image: "/Makhana.png"
     }
   ];
 
