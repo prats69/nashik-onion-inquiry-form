@@ -65,7 +65,8 @@ const InquiryForm = () => {
             <Card className="shadow-none">
               <CardContent>
 
-                <iframe 
+                <iframe
+                  scrolling="no"
                   frameBorder="0" 
                   style={{height: '1100px', width:'100%', border:'none'}} 
                   src='https://forms.zohopublic.in/zokoglobal1/form/onionLP/formperma/tUZ5aifmJKoL32cgjCnvjIncWKjVVJr3IImyUndG6OU'
