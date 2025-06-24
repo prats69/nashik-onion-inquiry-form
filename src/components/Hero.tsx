@@ -28,7 +28,7 @@ const Hero = () => {
 
       {/* Hero Content */}
       <div className="flex-1 flex items-center">
-        <div className="absolute inset-0 bg-[url('/onions.png')] bg-cover bg-center opacity-10"></div>
+        <div className="absolute inset-0 bg-[url('/onions.jpg')] bg-cover bg-center opacity-10"></div>
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -89,7 +89,7 @@ const Hero = () => {
             <div className="relative">
               <div className="aspect-square bg-gradient-to-br from-navy-100 to-turquoise-100 rounded-3xl p-8 shadow-2xl">
                 <img 
-                  src="/onions.png" 
+                  src="/onions.jpg" 
                   alt="Fresh Agricultural Produce"
                   className="w-full h-full object-cover rounded-2xl shadow-lg"
                 />
