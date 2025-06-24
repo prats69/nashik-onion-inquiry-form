@@ -63,10 +63,7 @@ const InquiryForm = () => {
         <div className="grid lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2">
             <Card className="shadow-none">
-              {/* <CardHeader>
-                <CardTitle className="text-2xl text-gray-900">Inquiry Form</CardTitle>
-              </CardHeader>
-              <CardContent> */}
+              
                 <iframe 
                   frameBorder="0" 
                   style={{height: '1100px', width:'100%', border:'none'}} 
