@@ -5,52 +5,46 @@ import { MessageCircle, Star } from "lucide-react";
 const Testimonials = () => {
   const testimonials = [
     {
-      name: "Ahmed Al-Rashid",
       country: "UAE",
-      message: "Excellent quality onions! Very fresh and well-packaged. Zoko Group delivers exactly what they promise.",
       rating: 5,
       date: "2 days ago",
-      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?ixlib=rb-4.0.3&w=300&h=600"
+      image: "/1.png"
     },
     {
-      name: "Sarah Johnson",
+      
       country: "UK",
-      message: "First time importing from India and Zoko Group made it so easy! Great support throughout the process.",
+
       rating: 5,
       date: "1 week ago",
-      image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?ixlib=rb-4.0.3&w=300&h=600"
+      image: "/2.png"
     },
     {
-      name: "Mohammad Hassan",
+      
       country: "Qatar",
-      message: "Been working with them for 3 years. Consistent quality and reliable delivery. Highly recommended!",
+
       rating: 5,
       date: "3 days ago",
-      image: "https://images.unsplash.com/photo-1493962853295-0fd70327578a?ixlib=rb-4.0.3&w=300&h=600"
+      image: "/3.png"
     },
     {
-      name: "Lisa Chen",
       country: "Singapore",
-      message: "The mango pulp quality is outstanding! Perfect for our food processing business.",
+
       rating: 5,
       date: "5 days ago",
-      image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?ixlib=rb-4.0.3&w=300&h=600"
+      image: "/4.png"
     },
     {
-      name: "David Miller",
       country: "Australia",
-      message: "Competitive prices and excellent customer service. They handle all documentation perfectly.",
       rating: 5,
       date: "1 week ago",
-      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&w=300&h=600"
+      image: "/6.png"
     },
     {
-      name: "Fatima Al-Zahra",
       country: "Bahrain",
-      message: "Fresh garlic arrived in perfect condition. Fast shipping and great communication.",
+
       rating: 5,
       date: "4 days ago",
-      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&w=300&h=600"
+      image: "/7.png"
     }
   ];
 
