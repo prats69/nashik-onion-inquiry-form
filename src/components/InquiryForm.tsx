@@ -68,13 +68,8 @@ const InquiryForm = () => {
                 <iframe
                   scrolling="no"
                   frameBorder="0" 
-              style={{ 
-                width: '100%', 
-                minHeight: '100vh', // Full viewport height as minimum
-                height: 'auto', // Adjusts to content if less than viewport
-                border: 'none', 
+                  className="w-full min-h-[120vh] h-auto border-none"
 
-              }}
                 src='https://forms.zohopublic.in/zokoglobal1/form/onionLP/formperma/tUZ5aifmJKoL32cgjCnvjIncWKjVVJr3IImyUndG6OU'
                 />
               </CardContent>
