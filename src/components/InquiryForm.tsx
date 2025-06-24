@@ -64,13 +64,11 @@ const InquiryForm = () => {
           <div className="lg:col-span-2">
             <Card className="shadow-none">
               <CardContent>
-
                 <iframe
                   scrolling="no"
                   frameBorder="0" 
                   className="w-full min-h-[110vh] h-auto border-none"
-
-                src='https://forms.zohopublic.in/zokoglobal1/form/onionLP/formperma/tUZ5aifmJKoL32cgjCnvjIncWKjVVJr3IImyUndG6OU'
+                  src='https://forms.zohopublic.in/zokoglobal1/form/onionLP/formperma/tUZ5aifmJKoL32cgjCnvjIncWKjVVJr3IImyUndG6OU?zf_rszfm=1&zf_tp_val=%2Fthank-you'
                 />
               </CardContent>
             </Card>
