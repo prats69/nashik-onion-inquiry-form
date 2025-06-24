@@ -68,8 +68,14 @@ const InquiryForm = () => {
                 <iframe
                   scrolling="no"
                   frameBorder="0" 
-                  style={{height: '1100px', width:'100%', border:'none'}} 
-                  src='https://forms.zohopublic.in/zokoglobal1/form/onionLP/formperma/tUZ5aifmJKoL32cgjCnvjIncWKjVVJr3IImyUndG6OU'
+              style={{ 
+                width: '100%', 
+                minHeight: '100vh', // Full viewport height as minimum
+                height: 'auto', // Adjusts to content if less than viewport
+                border: 'none', 
+                overflow: 'hidden' 
+              }}
+                src='https://forms.zohopublic.in/zokoglobal1/form/onionLP/formperma/tUZ5aifmJKoL32cgjCnvjIncWKjVVJr3IImyUndG6OU'
                 />
               </CardContent>
             </Card>
