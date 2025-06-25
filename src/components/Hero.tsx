@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { MapPin, Award, Truck, MessageCircle, Calculator } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -76,14 +75,6 @@ const Hero = () => {
                 >
                   Get Quote Now
                 </Button>
-                <Link to="/price-calculator">
-                  <Button 
-                    className="bg-turquoise-600 hover:bg-turquoise-700 text-white px-8 py-4 text-lg font-semibold rounded-lg transition-colors duration-300 flex items-center gap-2 w-full"
-                  >
-                    <Calculator className="w-5 h-5" />
-                    Price Calculator
-                  </Button>
-                </Link>
                 <Button 
                   onClick={openWhatsApp}
                   className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg font-semibold rounded-lg transition-colors duration-300 flex items-center gap-2"

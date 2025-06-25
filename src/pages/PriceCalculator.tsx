@@ -4,21 +4,27 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { Calculator, MessageCircle, Info } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Calculator, MessageCircle, Info, Globe } from "lucide-react";
 
 interface ExchangeRates {
   [key: string]: number;
+}
+
+interface LanguageOption {
+  code: string;
+  name: string;
+  nativeName: string;
 }
 
 const PriceCalculator = () => {
   const [onionSize, setOnionSize] = useState<string>("");
   const [packaging, setPackaging] = useState<string>("");
   const [currency, setCurrency] = useState<string>("INR");
+  const [language, setLanguage] = useState<string>("en");
   const [exchangeRates, setExchangeRates] = useState<ExchangeRates>({});
   const [isLoading, setIsLoading] = useState(false);
 
-  // Base prices per kg in INR
+  // Base prices per kg in INR (hidden from UI)
   const basePrices = {
     "40-45mm": 14.5,
     "45mm+": 16.5,
@@ -26,7 +32,7 @@ const PriceCalculator = () => {
     "55mm+": 18.5,
   };
 
-  // Packaging modifiers per kg in INR
+  // Packaging modifiers per kg in INR (hidden from UI)
   const packagingModifiers = {
     "5kg-red-mesh": 1.00,
     "10kg-red-mesh": 0.00,
@@ -48,12 +54,136 @@ const PriceCalculator = () => {
     MYR: "RM",
   };
 
+  // Language options based on currencies offered
+  const languageOptions: LanguageOption[] = [
+    { code: "en", name: "English", nativeName: "English" },
+    { code: "hi", name: "Hindi", nativeName: "हिन्दी" },
+    { code: "ar", name: "Arabic", nativeName: "العربية" },
+    { code: "ms", name: "Malay", nativeName: "Bahasa Melayu" },
+    { code: "de", name: "German", nativeName: "Deutsch" },
+  ];
+
+  // Translations object (basic implementation - can be expanded)
+  const translations = {
+    en: {
+      title: "Onion Price Calculator",
+      subtitle: "Get instant pricing for premium red onions based on your specifications",
+      calculatePrice: "Calculate Your Price",
+      onionSize: "Onion Size",
+      packagingType: "Packaging Type",
+      currency: "Currency",
+      language: "Language",
+      calculatedPrices: "Calculated Prices",
+      pricePerTon: "Final Price per Ton",
+      pricePerContainer: "Final Price per 29T Container",
+      sendQuote: "Send Quote on WhatsApp",
+      selectSize: "Select onion size",
+      selectPackaging: "Select packaging type",
+      selectCurrency: "Select currency",
+      selectLanguage: "Select language",
+      loadingRates: "Loading exchange rates...",
+      selectToCalculate: "Select onion size and packaging type to see calculated prices",
+      lastUpdated: "Last updated: June 25, 2025",
+      fobNote: "Note: Prices are FOB India and may change with freight, certification or destination port.",
+      approximateNote: "Note: These are approximate rates, a variation of 5-10% should be considered. Actual prices will depend on realtime bank exchange rates."
+    },
+    hi: {
+      title: "प्याज मूल्य कैलकुलेटर",
+      subtitle: "अपनी विशिष्टताओं के आधार पर प्रीमियम लाल प्याज के लिए तत्काल मूल्य निर्धारण प्राप्त करें",
+      calculatePrice: "अपनी कीमत की गणना करें",
+      onionSize: "प्याज का आकार",
+      packagingType: "पैकेजिंग प्रकार",
+      currency: "मुद्रा",
+      language: "भाषा",
+      calculatedPrices: "गणना की गई कीमतें",
+      pricePerTon: "प्रति टन अंतिम मूल्य",
+      pricePerContainer: "29T कंटेनर के लिए अंतिम मूल्य",
+      sendQuote: "व्हाट्सऐप पर कोटेशन भेजें",
+      selectSize: "प्याज का आकार चुनें",
+      selectPackaging: "पैकेजिंग प्रकार चुनें",
+      selectCurrency: "मुद्रा चुनें",
+      selectLanguage: "भाषा चुनें",
+      loadingRates: "विनिमय दरें लोड हो रही हैं...",
+      selectToCalculate: "गणना की गई कीमतें देखने के लिए प्याज का आकार और पैकेजिंग प्रकार चुनें",
+      lastUpdated: "अंतिम अपडेट: 25 जून 2025",
+      fobNote: "नोट: कीमतें FOB भारत हैं और फ्रेट, सर्टिफिकेशन या गंतव्य पोर्ट के साथ बदल सकती हैं।",
+      approximateNote: "नोट: ये अनुमानित दरें हैं, 5-10% की भिन्नता पर विचार किया जाना चाहिए। वास्तविक कीमतें रियलटाइम बैंक विनिमय दरों पर निर्भर करेंगी।"
+    },
+    ar: {
+      title: "حاسبة أسعار البصل",
+      subtitle: "احصل على تسعير فوري للبصل الأحمر المميز بناءً على مواصفاتك",
+      calculatePrice: "احسب سعرك",
+      onionSize: "حجم البصل",
+      packagingType: "نوع التغليف",
+      currency: "العملة",
+      language: "اللغة",
+      calculatedPrices: "الأسعار المحسوبة",
+      pricePerTon: "السعر النهائي لكل طن",
+      pricePerContainer: "السعر النهائي لحاوية 29 طن",
+      sendQuote: "إرسال عرض أسعار عبر واتساب",
+      selectSize: "اختر حجم البصل",
+      selectPackaging: "اختر نوع التغليف",
+      selectCurrency: "اختر العملة",
+      selectLanguage: "اختر اللغة",
+      loadingRates: "تحميل أسعار الصرف...",
+      selectToCalculate: "اختر حجم البصل ونوع التغليف لرؤية الأسعار المحسوبة",
+      lastUpdated: "آخر تحديث: 25 يونيو 2025",
+      fobNote: "ملاحظة: الأسعار FOB الهند وقد تتغير مع الشحن أو الشهادات أو ميناء الوجهة.",
+      approximateNote: "ملاحظة: هذه أسعار تقريبية، يجب النظر في تباين 5-10%. ستعتمد الأسعار الفعلية على أسعار صرف البنوك في الوقت الفعلي."
+    },
+    ms: {
+      title: "Kalkulator Harga Bawang",
+      subtitle: "Dapatkan harga segera untuk bawang merah premium berdasarkan spesifikasi anda",
+      calculatePrice: "Kira Harga Anda",
+      onionSize: "Saiz Bawang",
+      packagingType: "Jenis Pembungkusan",
+      currency: "Mata Wang",
+      language: "Bahasa",
+      calculatedPrices: "Harga Dikira",
+      pricePerTon: "Harga Akhir Setiap Tan",
+      pricePerContainer: "Harga Akhir Setiap Kontena 29T",
+      sendQuote: "Hantar Sebut Harga di WhatsApp",
+      selectSize: "Pilih saiz bawang",
+      selectPackaging: "Pilih jenis pembungkusan",
+      selectCurrency: "Pilih mata wang",
+      selectLanguage: "Pilih bahasa",
+      loadingRates: "Memuatkan kadar pertukaran...",
+      selectToCalculate: "Pilih saiz bawang dan jenis pembungkusan untuk melihat harga dikira",
+      lastUpdated: "Kemaskini terakhir: 25 Jun 2025",
+      fobNote: "Nota: Harga adalah FOB India dan mungkin berubah dengan pengangkutan, pensijilan atau pelabuhan destinasi.",
+      approximateNote: "Nota: Ini adalah kadar anggaran, variasi 5-10% harus dipertimbangkan. Harga sebenar bergantung pada kadar pertukaran bank masa nyata."
+    },
+    de: {
+      title: "Zwiebel-Preisrechner",
+      subtitle: "Erhalten Sie sofortige Preise für premium rote Zwiebeln basierend auf Ihren Spezifikationen",
+      calculatePrice: "Berechnen Sie Ihren Preis",
+      onionSize: "Zwiebelgröße",
+      packagingType: "Verpackungsart",
+      currency: "Währung",
+      language: "Sprache",
+      calculatedPrices: "Berechnete Preise",
+      pricePerTon: "Endpreis pro Tonne",
+      pricePerContainer: "Endpreis pro 29T Container",
+      sendQuote: "Angebot per WhatsApp senden",
+      selectSize: "Zwiebelgröße auswählen",
+      selectPackaging: "Verpackungsart auswählen",
+      selectCurrency: "Währung auswählen",
+      selectLanguage: "Sprache auswählen",
+      loadingRates: "Wechselkurse werden geladen...",
+      selectToCalculate: "Wählen Sie Zwiebelgröße und Verpackungsart, um berechnete Preise zu sehen",
+      lastUpdated: "Zuletzt aktualisiert: 25. Juni 2025",
+      fobNote: "Hinweis: Preise sind FOB Indien und können sich mit Fracht, Zertifizierung oder Zielhafen ändern.",
+      approximateNote: "Hinweis: Dies sind ungefähre Preise, eine Abweichung von 5-10% sollte berücksichtigt werden. Tatsächliche Preise hängen von Echtzeit-Bankwechselkursen ab."
+    }
+  };
+
+  const t = translations[language as keyof typeof translations] || translations.en;
+
   // Fetch exchange rates
   useEffect(() => {
     const fetchExchangeRates = async () => {
       setIsLoading(true);
       try {
-        // Using a free exchange rate API (you can replace with a more reliable one)
         const response = await fetch('https://api.exchangerate-api.com/v4/latest/INR');
         const data = await response.json();
         setExchangeRates(data.rates);
@@ -157,11 +287,11 @@ Thank you!`;
           <div className="flex items-center justify-center gap-3 mb-4">
             <Calculator className="w-8 h-8 text-navy-600" />
             <h1 className="text-4xl font-bold text-gray-900">
-              Onion Price <span className="text-navy-600">Calculator</span>
+              {t.title.split(' ').slice(0, 2).join(' ')} <span className="text-navy-600">{t.title.split(' ').slice(2).join(' ')}</span>
             </h1>
           </div>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Get instant pricing for premium red onions based on your specifications
+            {t.subtitle}
           </p>
         </div>
 
@@ -171,24 +301,44 @@ Thank you!`;
             <CardHeader>
               <CardTitle className="text-2xl text-gray-900 flex items-center gap-2">
                 <Calculator className="w-6 h-6 text-navy-600" />
-                Calculate Your Price
+                {t.calculatePrice}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
+              {/* Language Selection */}
+              <div className="space-y-2">
+                <Label htmlFor="language" className="text-base font-medium flex items-center gap-2">
+                  <Globe className="w-4 h-4" />
+                  {t.language}
+                </Label>
+                <Select value={language} onValueChange={setLanguage}>
+                  <SelectTrigger>
+                    <SelectValue placeholder={t.selectLanguage} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {languageOptions.map((lang) => (
+                      <SelectItem key={lang.code} value={lang.code}>
+                        {lang.nativeName} ({lang.name})
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
               {/* Onion Size */}
               <div className="space-y-2">
                 <Label htmlFor="onion-size" className="text-base font-medium">
-                  Onion Size
+                  {t.onionSize}
                 </Label>
                 <Select value={onionSize} onValueChange={setOnionSize}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select onion size" />
+                    <SelectValue placeholder={t.selectSize} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="40-45mm">40–45mm (Base: ₹14.5/kg)</SelectItem>
-                    <SelectItem value="45mm+">45mm+ (Base: ₹16.5/kg)</SelectItem>
-                    <SelectItem value="50mm+">50mm+ (Base: ₹17.5/kg)</SelectItem>
-                    <SelectItem value="55mm+">55mm+ (Base: ₹18.5/kg)</SelectItem>
+                    <SelectItem value="40-45mm">40–45mm</SelectItem>
+                    <SelectItem value="45mm+">45mm+</SelectItem>
+                    <SelectItem value="50mm+">50mm+</SelectItem>
+                    <SelectItem value="55mm+">55mm+</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -196,17 +346,17 @@ Thank you!`;
               {/* Packaging Type */}
               <div className="space-y-2">
                 <Label htmlFor="packaging" className="text-base font-medium">
-                  Packaging Type
+                  {t.packagingType}
                 </Label>
                 <Select value={packaging} onValueChange={setPackaging}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select packaging type" />
+                    <SelectValue placeholder={t.selectPackaging} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="5kg-red-mesh">5kg Red Mesh Bag (+₹1.00/kg)</SelectItem>
-                    <SelectItem value="10kg-red-mesh">10kg Red Mesh Bag (Base price)</SelectItem>
-                    <SelectItem value="18kg-red-mesh">18kg Red Mesh Bag (–₹0.25/kg)</SelectItem>
-                    <SelectItem value="20kg-red-mesh">20kg Red Mesh Bag (–₹0.25/kg)</SelectItem>
+                    <SelectItem value="5kg-red-mesh">5kg Red Mesh Bag</SelectItem>
+                    <SelectItem value="10kg-red-mesh">10kg Red Mesh Bag</SelectItem>
+                    <SelectItem value="18kg-red-mesh">18kg Red Mesh Bag</SelectItem>
+                    <SelectItem value="20kg-red-mesh">20kg Red Mesh Bag</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -214,11 +364,11 @@ Thank you!`;
               {/* Currency */}
               <div className="space-y-2">
                 <Label htmlFor="currency" className="text-base font-medium">
-                  Currency
+                  {t.currency}
                 </Label>
                 <Select value={currency} onValueChange={setCurrency}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select currency" />
+                    <SelectValue placeholder={t.selectCurrency} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="INR">INR (₹) - Indian Rupee</SelectItem>
@@ -237,7 +387,7 @@ Thank you!`;
 
               {isLoading && (
                 <div className="text-center text-gray-500">
-                  Loading exchange rates...
+                  {t.loadingRates}
                 </div>
               )}
             </CardContent>
@@ -247,7 +397,7 @@ Thank you!`;
           <Card className="shadow-lg bg-gradient-to-br from-navy-50 to-turquoise-50">
             <CardHeader>
               <CardTitle className="text-2xl text-gray-900">
-                Calculated Prices
+                {t.calculatedPrices}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -256,7 +406,7 @@ Thank you!`;
                   <div className="space-y-4">
                     <div className="bg-white p-6 rounded-lg shadow-sm">
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                        Final Price per Ton
+                        {t.pricePerTon}
                       </h3>
                       <p className="text-3xl font-bold text-navy-600">
                         {formatCurrency(perTon, currency)}
@@ -265,7 +415,7 @@ Thank you!`;
 
                     <div className="bg-white p-6 rounded-lg shadow-sm">
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                        Final Price per 29T Container
+                        {t.pricePerContainer}
                       </h3>
                       <p className="text-3xl font-bold text-turquoise-600">
                         {formatCurrency(perContainer, currency)}
@@ -278,32 +428,29 @@ Thank you!`;
                     className="w-full bg-green-600 hover:bg-green-700 text-white py-4 text-lg font-semibold flex items-center gap-2"
                   >
                     <MessageCircle className="w-5 h-5" />
-                    Send Quote on WhatsApp
+                    {t.sendQuote}
                   </Button>
 
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <div className="flex items-center gap-2 text-sm text-gray-600 cursor-help">
-                          <Info className="w-4 h-4" />
-                          <span>Important pricing information</span>
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent className="max-w-xs">
-                        <p>Prices are FOB India and may change with freight, certification or destination port.</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                  <div className="space-y-3 text-sm text-gray-600">
+                    <div className="flex items-start gap-2">
+                      <Info className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                      <p>{t.fobNote}</p>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Info className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                      <p>{t.approximateNote}</p>
+                    </div>
+                  </div>
 
                   <div className="text-xs text-gray-500">
-                    Last updated: December 25, 2024
+                    {t.lastUpdated}
                   </div>
                 </>
               ) : (
                 <div className="text-center py-12">
                   <Calculator className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                   <p className="text-gray-500 text-lg">
-                    Select onion size and packaging type to see calculated prices
+                    {t.selectToCalculate}
                   </p>
                 </div>
               )}
@@ -329,10 +476,10 @@ Thank you!`;
           </div>
           <div className="text-center">
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Info className="w-8 h-8 text-green-600" />
+              <Globe className="w-8 h-8 text-green-600" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Transparent Pricing</h3>
-            <p className="text-gray-600">Clear breakdown of costs with no hidden charges</p>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Multi-language Support</h3>
+            <p className="text-gray-600">Available in multiple languages for global accessibility</p>
           </div>
         </div>
       </div>
