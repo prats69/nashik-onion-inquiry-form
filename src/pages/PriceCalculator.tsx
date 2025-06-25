@@ -21,6 +21,9 @@ const PriceCalculator = () => {
   const [packaging, setPackaging] = useState<string>("");
   const [currency, setCurrency] = useState<string>("INR");
   const [language, setLanguage] = useState<string>("en");
+  const [shippingPort, setShippingPort] = useState<string>("");
+  const [quantity, setQuantity] = useState<string>("");
+  const [orderTiming, setOrderTiming] = useState<string>("");
   const [exchangeRates, setExchangeRates] = useState<ExchangeRates>({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -53,14 +56,84 @@ const PriceCalculator = () => {
     MYR: "RM",
   };
 
-  // Language options based on currencies offered (removed Hindi and German)
+  // Language options based on currencies offered
   const languageOptions: LanguageOption[] = [
     { code: "en", name: "English", nativeName: "English" },
     { code: "ar", name: "Arabic", nativeName: "العربية" },
     { code: "ms", name: "Malay", nativeName: "Bahasa Melayu" },
   ];
 
-  // Translations object (removed Hindi and German translations)
+  // Shipping ports by currency/country
+  const shippingPorts = {
+    USD: [
+      "New York, USA",
+      "Los Angeles, USA",
+      "Miami, USA",
+      "Houston, USA",
+      "Seattle, USA"
+    ],
+    AED: [
+      "Jebel Ali, Dubai",
+      "Abu Dhabi Port",
+      "Sharjah Port",
+      "Fujairah Port"
+    ],
+    SAR: [
+      "Jeddah Islamic Port",
+      "King Abdulaziz Port, Dammam",
+      "Yanbu Commercial Port",
+      "Jizan Port"
+    ],
+    OMR: [
+      "Port Sultan Qaboos, Muscat",
+      "Sohar Port",
+      "Salalah Port"
+    ],
+    BHD: [
+      "Khalifa Bin Salman Port",
+      "Mina Salman Port"
+    ],
+    QAR: [
+      "Hamad Port, Doha",
+      "Mesaieed Port",
+      "Ras Laffan Port"
+    ],
+    KWD: [
+      "Shuwaikh Port",
+      "Shuaiba Port",
+      "Doha Port"
+    ],
+    MYR: [
+      "Port Klang",
+      "Johor Port",
+      "Penang Port",
+      "Kuantan Port"
+    ]
+  };
+
+  // Quantity options
+  const quantityOptions = [
+    { value: "1", label: "1 Container (29 MT)" },
+    { value: "2", label: "2 Containers (58 MT)" },
+    { value: "3", label: "3 Containers (87 MT)" },
+    { value: "4", label: "4 Containers (116 MT)" },
+    { value: "5", label: "5 Containers (145 MT)" },
+    { value: "10", label: "10 Containers (290 MT)" },
+    { value: "20", label: "20 Containers (580 MT)" },
+    { value: "custom", label: "Custom Quantity" }
+  ];
+
+  // Order timing options
+  const orderTimingOptions = [
+    { value: "immediate", label: "Immediate (Within 1 week)" },
+    { value: "2weeks", label: "Within 2 weeks" },
+    { value: "1month", label: "Within 1 month" },
+    { value: "2months", label: "Within 2 months" },
+    { value: "3months", label: "Within 3 months" },
+    { value: "flexible", label: "Flexible timing" }
+  ];
+
+  // Translations object
   const translations = {
     en: {
       title: "Onion Price Calculator",
@@ -70,20 +143,26 @@ const PriceCalculator = () => {
       packagingType: "Packaging Type",
       currency: "Currency",
       language: "Language",
+      shippingPort: "Preferred Shipping Port",
+      quantity: "Quantity Required",
+      orderTiming: "Order Timing",
       calculatedPrices: "Calculated Prices",
       pricePerKg: "Final Price per KG",
       pricePerTon: "Final Price per Ton",
       pricePerContainer: "Final Price per 29T Container",
-      sendQuote: "Send Configuration to Zoko Group",
+      sendQuote: "Get Final Quote on WhatsApp",
       selectSize: "Select onion size",
       selectPackaging: "Select packaging type",
       selectCurrency: "Select currency",
       selectLanguage: "Select language",
+      selectPort: "Select preferred port",
+      selectQuantity: "Select quantity",
+      selectTiming: "Select order timing",
       loadingRates: "Loading exchange rates...",
       selectToCalculate: "Select onion size and packaging type to see calculated prices",
       lastUpdated: "Last updated: June 25, 2025",
       fobNote: "Note: Prices are FOB India and may change with freight, certification or destination port.",
-      approximateNote: "Note: These are approximate rates, a variation of 5-10% should be considered. Actual prices will depend on realtime bank exchange rates."
+      approximateNote: "Note: These are approximate rates, a variation of upto 5% should be considered. Actual prices will depend on realtime bank exchange rates."
     },
     ar: {
       title: "حاسبة أسعار البصل",
@@ -93,20 +172,26 @@ const PriceCalculator = () => {
       packagingType: "نوع التغليف",
       currency: "العملة",
       language: "اللغة",
+      shippingPort: "ميناء الشحن المفضل",
+      quantity: "الكمية المطلوبة",
+      orderTiming: "توقيت الطلب",
       calculatedPrices: "الأسعار المحسوبة",
       pricePerKg: "السعر النهائي لكل كيلوغرام",
       pricePerTon: "السعر النهائي لكل طن",
       pricePerContainer: "السعر النهائي لحاوية 29 طن",
-      sendQuote: "إرسال التكوين إلى مجموعة زوكو",
+      sendQuote: "احصل على عرض أسعار نهائي عبر واتساب",
       selectSize: "اختر حجم البصل",
       selectPackaging: "اختر نوع التغليف",
       selectCurrency: "اختر العملة",
       selectLanguage: "اختر اللغة",
+      selectPort: "اختر الميناء المفضل",
+      selectQuantity: "اختر الكمية",
+      selectTiming: "اختر توقيت الطلب",
       loadingRates: "تحميل أسعار الصرف...",
       selectToCalculate: "اختر حجم البصل ونوع التغليف لرؤية الأسعار المحسوبة",
       lastUpdated: "آخر تحديث: 25 يونيو 2025",
       fobNote: "ملاحظة: الأسعار FOB الهند وقد تتغير مع الشحن أو الشهادات أو ميناء الوجهة.",
-      approximateNote: "ملاحظة: هذه أسعار تقريبية، يجب النظر في تباين 5-10%. ستعتمد الأسعار الفعلية على أسعار صرف البنوك في الوقت الفعلي."
+      approximateNote: "ملاحظة: هذه أسعار تقريبية، يجب النظر في تباين يصل إلى 5%. ستعتمد الأسعار الفعلية على أسعار صرف البنوك في الوقت الفعلي."
     },
     ms: {
       title: "Kalkulator Harga Bawang",
@@ -116,20 +201,26 @@ const PriceCalculator = () => {
       packagingType: "Jenis Pembungkusan",
       currency: "Mata Wang",
       language: "Bahasa",
+      shippingPort: "Pelabuhan Penghantaran Pilihan",
+      quantity: "Kuantiti Diperlukan",
+      orderTiming: "Masa Tempahan",
       calculatedPrices: "Harga Dikira",
       pricePerKg: "Harga Akhir Setiap KG",
       pricePerTon: "Harga Akhir Setiap Tan",
       pricePerContainer: "Harga Akhir Setiap Kontena 29T",
-      sendQuote: "Hantar Konfigurasi kepada Kumpulan Zoko",
+      sendQuote: "Dapatkan Sebut Harga Akhir di WhatsApp",
       selectSize: "Pilih saiz bawang",
       selectPackaging: "Pilih jenis pembungkusan",
       selectCurrency: "Pilih mata wang",
       selectLanguage: "Pilih bahasa",
+      selectPort: "Pilih pelabuhan pilihan",
+      selectQuantity: "Pilih kuantiti",
+      selectTiming: "Pilih masa tempahan",
       loadingRates: "Memuatkan kadar pertukaran...",
       selectToCalculate: "Pilih saiz bawang dan jenis pembungkusan untuk melihat harga dikira",
       lastUpdated: "Kemaskini terakhir: 25 Jun 2025",
       fobNote: "Nota: Harga adalah FOB India dan mungkin berubah dengan pengangkutan, pensijilan atau pelabuhan destinasi.",
-      approximateNote: "Nota: Ini adalah kadar anggaran, variasi 5-10% harus dipertimbangkan. Harga sebenar bergantung pada kadar pertukaran bank masa nyata."
+      approximateNote: "Nota: Ini adalah kadar anggaran, variasi sehingga 5% harus dipertimbangkan. Harga sebenar bergantung pada kadar pertukaran bank masa nyata."
     }
   };
 
@@ -145,7 +236,7 @@ const PriceCalculator = () => {
         setExchangeRates(data.rates);
       } catch (error) {
         console.error('Failed to fetch exchange rates:', error);
-        // Fallback rates (removed EUR)
+        // Fallback rates
         setExchangeRates({
           INR: 1,
           USD: 0.012,
@@ -201,6 +292,8 @@ const PriceCalculator = () => {
   const generateWhatsAppMessage = () => {
     const sizeLabel = onionSize.replace('-', '–');
     const packagingLabel = packaging.replace('-', ' ').replace('kg', 'kg ').replace('mesh', 'Mesh Bag');
+    const quantityLabel = quantityOptions.find(q => q.value === quantity)?.label || quantity;
+    const timingLabel = orderTimingOptions.find(t => t.value === orderTiming)?.label || orderTiming;
     
     const message = `Hi! I'm interested in getting a quote for red onions with the following specifications:
 
@@ -208,6 +301,9 @@ const PriceCalculator = () => {
 📦 Packaging: ${packagingLabel}
 💰 Estimated Price: ${formatCurrency(perTon, currency)} per ton
 📊 Container Price (29T): ${formatCurrency(perContainer, currency)}
+📈 Quantity Required: ${quantityLabel}
+⏱️ Order Timing: ${timingLabel}
+🚢 Preferred Port: ${shippingPort || 'To be discussed'}
 
 Please provide me with a detailed quote including freight costs and delivery terms.
 
@@ -317,7 +413,7 @@ Thank you!`;
                 </Select>
               </div>
 
-              {/* Currency (removed EUR) */}
+              {/* Currency */}
               <div className="space-y-2">
                 <Label htmlFor="currency" className="text-base font-medium">
                   {t.currency}
@@ -336,6 +432,63 @@ Thank you!`;
                     <SelectItem value="QAR">QAR (ر.ق) - Qatari Riyal</SelectItem>
                     <SelectItem value="KWD">KWD (د.ك) - Kuwaiti Dinar</SelectItem>
                     <SelectItem value="MYR">MYR (RM) - Malaysian Ringgit</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Shipping Port */}
+              <div className="space-y-2">
+                <Label htmlFor="shipping-port" className="text-base font-medium">
+                  {t.shippingPort}
+                </Label>
+                <Select value={shippingPort} onValueChange={setShippingPort}>
+                  <SelectTrigger>
+                    <SelectValue placeholder={t.selectPort} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {(shippingPorts[currency as keyof typeof shippingPorts] || []).map((port) => (
+                      <SelectItem key={port} value={port}>
+                        {port}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Quantity */}
+              <div className="space-y-2">
+                <Label htmlFor="quantity" className="text-base font-medium">
+                  {t.quantity}
+                </Label>
+                <Select value={quantity} onValueChange={setQuantity}>
+                  <SelectTrigger>
+                    <SelectValue placeholder={t.selectQuantity} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {quantityOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Order Timing */}
+              <div className="space-y-2">
+                <Label htmlFor="order-timing" className="text-base font-medium">
+                  {t.orderTiming}
+                </Label>
+                <Select value={orderTiming} onValueChange={setOrderTiming}>
+                  <SelectTrigger>
+                    <SelectValue placeholder={t.selectTiming} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {orderTimingOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
