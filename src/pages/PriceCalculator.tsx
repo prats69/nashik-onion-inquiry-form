@@ -139,7 +139,7 @@ const PriceCalculator = () => {
       loadingRates: "Loading exchange rates...",
       selectToCalculate: "Select onion size and packaging type to see calculated prices",
       lastUpdated: "Last updated: June 25, 2025",
-      fobNote: "Note: Prices are FOB India and may change with freight, certification or destination port.",
+      fobNote: "Note: Prices are EXW India and may change with freight, certification or destination port.",
       approximateNote: "Note: These are approximate rates, a variation of upto 5% should be considered. Actual prices will depend on realtime bank exchange rates."
     },
     ar: {
@@ -168,7 +168,7 @@ const PriceCalculator = () => {
       loadingRates: "تحميل أسعار الصرف...",
       selectToCalculate: "اختر حجم البصل ونوع التغليف لرؤية الأسعار المحسوبة",
       lastUpdated: "آخر تحديث: 25 يونيو 2025",
-      fobNote: "ملاحظة: الأسعار FOB الهند وقد تتغير مع الشحن أو الشهادات أو ميناء الوجهة.",
+      fobNote: "ملاحظة: الأسعار EXW الهند وقد تتغير مع الشحن أو الشهادات أو ميناء الوجهة.",
       approximateNote: "ملاحظة: هذه أسعار تقريبية، يجب النظر في تباين يصل إلى 5%. ستعتمد الأسعار الفعلية على أسعار صرف البنوك في الوقت الفعلي."
     },
     ms: {
@@ -197,7 +197,7 @@ const PriceCalculator = () => {
       loadingRates: "Memuatkan kadar pertukaran...",
       selectToCalculate: "Pilih saiz bawang dan jenis pembungkusan untuk melihat harga dikira",
       lastUpdated: "Kemaskini terakhir: 25 Jun 2025",
-      fobNote: "Nota: Harga adalah FOB India dan mungkin berubah dengan pengangkutan, pensijilan atau pelabuhan destinasi.",
+      fobNote: "Nota: Harga adalah EXW India dan mungkin berubah dengan pengangkutan, pensijilan atau pelabuhan destinasi.",
       approximateNote: "Nota: Ini adalah kadar anggaran, variasi sehingga 5% harus dipertimbangkan. Harga sebenar bergantung pada kadar pertukaran bank masa nyata."
     }
   };
