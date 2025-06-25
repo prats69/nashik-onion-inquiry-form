@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,7 +18,7 @@ interface LanguageOption {
 const PriceCalculator = () => {
   const [onionSize, setOnionSize] = useState<string>("");
   const [packaging, setPackaging] = useState<string>("");
-  const [currency, setCurrency] = useState<string>("INR");
+  const [currency, setCurrency] = useState<string>("USD"); // Default to USD
   const [language, setLanguage] = useState<string>("en");
   const [shippingPort, setShippingPort] = useState<string>("");
   const [quantity, setQuantity] = useState<string>("");
@@ -63,53 +62,32 @@ const PriceCalculator = () => {
     { code: "ms", name: "Malay", nativeName: "Bahasa Melayu" },
   ];
 
-  // Shipping ports by currency/country
-  const shippingPorts = {
-    USD: [
-      "New York, USA",
-      "Los Angeles, USA",
-      "Miami, USA",
-      "Houston, USA",
-      "Seattle, USA"
-    ],
-    AED: [
-      "Jebel Ali, Dubai",
-      "Abu Dhabi Port",
-      "Sharjah Port",
-      "Fujairah Port"
-    ],
-    SAR: [
-      "Jeddah Islamic Port",
-      "King Abdulaziz Port, Dammam",
-      "Yanbu Commercial Port",
-      "Jizan Port"
-    ],
-    OMR: [
-      "Port Sultan Qaboos, Muscat",
-      "Sohar Port",
-      "Salalah Port"
-    ],
-    BHD: [
-      "Khalifa Bin Salman Port",
-      "Mina Salman Port"
-    ],
-    QAR: [
-      "Hamad Port, Doha",
-      "Mesaieed Port",
-      "Ras Laffan Port"
-    ],
-    KWD: [
-      "Shuwaikh Port",
-      "Shuaiba Port",
-      "Doha Port"
-    ],
-    MYR: [
-      "Port Klang",
-      "Johor Port",
-      "Penang Port",
-      "Kuantan Port"
-    ]
-  };
+  // All shipping ports (currency independent, excludes USA and Indian ports)
+  const allShippingPorts = [
+    "Jebel Ali, Dubai",
+    "Abu Dhabi Port",
+    "Sharjah Port",
+    "Fujairah Port",
+    "Jeddah Islamic Port",
+    "King Abdulaziz Port, Dammam",
+    "Yanbu Commercial Port",
+    "Jizan Port",
+    "Port Sultan Qaboos, Muscat",
+    "Sohar Port",
+    "Salalah Port",
+    "Khalifa Bin Salman Port",
+    "Mina Salman Port",
+    "Hamad Port, Doha",
+    "Mesaieed Port",
+    "Ras Laffan Port",
+    "Shuwaikh Port",
+    "Shuaiba Port",
+    "Doha Port",
+    "Port Klang",
+    "Johor Port",
+    "Penang Port",
+    "Kuantan Port"
+  ];
 
   // Quantity options
   const quantityOptions = [
@@ -295,7 +273,8 @@ const PriceCalculator = () => {
     const quantityLabel = quantityOptions.find(q => q.value === quantity)?.label || quantity;
     const timingLabel = orderTimingOptions.find(t => t.value === orderTiming)?.label || orderTiming;
     
-    const message = `Hi! I'm interested in getting a quote for red onions with the following specifications:
+    // Always generate message in English with emojis
+    const message = `Hi! 👋 I'm interested in getting a quote for red onions with the following specifications:
 
 🧅 Onion Size: ${sizeLabel}
 📦 Packaging: ${packagingLabel}
@@ -307,7 +286,7 @@ const PriceCalculator = () => {
 
 Please provide me with a detailed quote including freight costs and delivery terms.
 
-Thank you!`;
+Thank you! 🙏`;
 
     const encodedMessage = encodeURIComponent(message);
     return `https://wa.me/919998694346?text=${encodedMessage}`;
@@ -423,8 +402,8 @@ Thank you!`;
                     <SelectValue placeholder={t.selectCurrency} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="INR">INR (₹) - Indian Rupee</SelectItem>
                     <SelectItem value="USD">USD ($) - US Dollar</SelectItem>
+                    <SelectItem value="INR">INR (₹) - Indian Rupee</SelectItem>
                     <SelectItem value="AED">AED (د.إ) - UAE Dirham</SelectItem>
                     <SelectItem value="SAR">SAR (﷼) - Saudi Riyal</SelectItem>
                     <SelectItem value="OMR">OMR (ر.ع.) - Omani Rial</SelectItem>
@@ -446,7 +425,7 @@ Thank you!`;
                     <SelectValue placeholder={t.selectPort} />
                   </SelectTrigger>
                   <SelectContent>
-                    {(shippingPorts[currency as keyof typeof shippingPorts] || []).map((port) => (
+                    {allShippingPorts.map((port) => (
                       <SelectItem key={port} value={port}>
                         {port}
                       </SelectItem>
