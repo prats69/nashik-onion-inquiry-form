@@ -44,7 +44,6 @@ const PriceCalculator = () => {
   const currencySymbols = {
     INR: "₹",
     USD: "$",
-    EUR: "€",
     AED: "د.إ",
     SAR: "﷼",
     OMR: "ر.ع.",
@@ -54,16 +53,14 @@ const PriceCalculator = () => {
     MYR: "RM",
   };
 
-  // Language options based on currencies offered
+  // Language options based on currencies offered (removed Hindi and German)
   const languageOptions: LanguageOption[] = [
     { code: "en", name: "English", nativeName: "English" },
-    { code: "hi", name: "Hindi", nativeName: "हिन्दी" },
     { code: "ar", name: "Arabic", nativeName: "العربية" },
     { code: "ms", name: "Malay", nativeName: "Bahasa Melayu" },
-    { code: "de", name: "German", nativeName: "Deutsch" },
   ];
 
-  // Translations object (basic implementation - can be expanded)
+  // Translations object (removed Hindi and German translations)
   const translations = {
     en: {
       title: "Onion Price Calculator",
@@ -74,9 +71,10 @@ const PriceCalculator = () => {
       currency: "Currency",
       language: "Language",
       calculatedPrices: "Calculated Prices",
+      pricePerKg: "Final Price per KG",
       pricePerTon: "Final Price per Ton",
       pricePerContainer: "Final Price per 29T Container",
-      sendQuote: "Send Quote on WhatsApp",
+      sendQuote: "Send Configuration to Zoko Group",
       selectSize: "Select onion size",
       selectPackaging: "Select packaging type",
       selectCurrency: "Select currency",
@@ -87,28 +85,6 @@ const PriceCalculator = () => {
       fobNote: "Note: Prices are FOB India and may change with freight, certification or destination port.",
       approximateNote: "Note: These are approximate rates, a variation of 5-10% should be considered. Actual prices will depend on realtime bank exchange rates."
     },
-    hi: {
-      title: "प्याज मूल्य कैलकुलेटर",
-      subtitle: "अपनी विशिष्टताओं के आधार पर प्रीमियम लाल प्याज के लिए तत्काल मूल्य निर्धारण प्राप्त करें",
-      calculatePrice: "अपनी कीमत की गणना करें",
-      onionSize: "प्याज का आकार",
-      packagingType: "पैकेजिंग प्रकार",
-      currency: "मुद्रा",
-      language: "भाषा",
-      calculatedPrices: "गणना की गई कीमतें",
-      pricePerTon: "प्रति टन अंतिम मूल्य",
-      pricePerContainer: "29T कंटेनर के लिए अंतिम मूल्य",
-      sendQuote: "व्हाट्सऐप पर कोटेशन भेजें",
-      selectSize: "प्याज का आकार चुनें",
-      selectPackaging: "पैकेजिंग प्रकार चुनें",
-      selectCurrency: "मुद्रा चुनें",
-      selectLanguage: "भाषा चुनें",
-      loadingRates: "विनिमय दरें लोड हो रही हैं...",
-      selectToCalculate: "गणना की गई कीमतें देखने के लिए प्याज का आकार और पैकेजिंग प्रकार चुनें",
-      lastUpdated: "अंतिम अपडेट: 25 जून 2025",
-      fobNote: "नोट: कीमतें FOB भारत हैं और फ्रेट, सर्टिफिकेशन या गंतव्य पोर्ट के साथ बदल सकती हैं।",
-      approximateNote: "नोट: ये अनुमानित दरें हैं, 5-10% की भिन्नता पर विचार किया जाना चाहिए। वास्तविक कीमतें रियलटाइम बैंक विनिमय दरों पर निर्भर करेंगी।"
-    },
     ar: {
       title: "حاسبة أسعار البصل",
       subtitle: "احصل على تسعير فوري للبصل الأحمر المميز بناءً على مواصفاتك",
@@ -118,9 +94,10 @@ const PriceCalculator = () => {
       currency: "العملة",
       language: "اللغة",
       calculatedPrices: "الأسعار المحسوبة",
+      pricePerKg: "السعر النهائي لكل كيلوغرام",
       pricePerTon: "السعر النهائي لكل طن",
       pricePerContainer: "السعر النهائي لحاوية 29 طن",
-      sendQuote: "إرسال عرض أسعار عبر واتساب",
+      sendQuote: "إرسال التكوين إلى مجموعة زوكو",
       selectSize: "اختر حجم البصل",
       selectPackaging: "اختر نوع التغليف",
       selectCurrency: "اختر العملة",
@@ -140,9 +117,10 @@ const PriceCalculator = () => {
       currency: "Mata Wang",
       language: "Bahasa",
       calculatedPrices: "Harga Dikira",
+      pricePerKg: "Harga Akhir Setiap KG",
       pricePerTon: "Harga Akhir Setiap Tan",
       pricePerContainer: "Harga Akhir Setiap Kontena 29T",
-      sendQuote: "Hantar Sebut Harga di WhatsApp",
+      sendQuote: "Hantar Konfigurasi kepada Kumpulan Zoko",
       selectSize: "Pilih saiz bawang",
       selectPackaging: "Pilih jenis pembungkusan",
       selectCurrency: "Pilih mata wang",
@@ -152,28 +130,6 @@ const PriceCalculator = () => {
       lastUpdated: "Kemaskini terakhir: 25 Jun 2025",
       fobNote: "Nota: Harga adalah FOB India dan mungkin berubah dengan pengangkutan, pensijilan atau pelabuhan destinasi.",
       approximateNote: "Nota: Ini adalah kadar anggaran, variasi 5-10% harus dipertimbangkan. Harga sebenar bergantung pada kadar pertukaran bank masa nyata."
-    },
-    de: {
-      title: "Zwiebel-Preisrechner",
-      subtitle: "Erhalten Sie sofortige Preise für premium rote Zwiebeln basierend auf Ihren Spezifikationen",
-      calculatePrice: "Berechnen Sie Ihren Preis",
-      onionSize: "Zwiebelgröße",
-      packagingType: "Verpackungsart",
-      currency: "Währung",
-      language: "Sprache",
-      calculatedPrices: "Berechnete Preise",
-      pricePerTon: "Endpreis pro Tonne",
-      pricePerContainer: "Endpreis pro 29T Container",
-      sendQuote: "Angebot per WhatsApp senden",
-      selectSize: "Zwiebelgröße auswählen",
-      selectPackaging: "Verpackungsart auswählen",
-      selectCurrency: "Währung auswählen",
-      selectLanguage: "Sprache auswählen",
-      loadingRates: "Wechselkurse werden geladen...",
-      selectToCalculate: "Wählen Sie Zwiebelgröße und Verpackungsart, um berechnete Preise zu sehen",
-      lastUpdated: "Zuletzt aktualisiert: 25. Juni 2025",
-      fobNote: "Hinweis: Preise sind FOB Indien und können sich mit Fracht, Zertifizierung oder Zielhafen ändern.",
-      approximateNote: "Hinweis: Dies sind ungefähre Preise, eine Abweichung von 5-10% sollte berücksichtigt werden. Tatsächliche Preise hängen von Echtzeit-Bankwechselkursen ab."
     }
   };
 
@@ -189,11 +145,10 @@ const PriceCalculator = () => {
         setExchangeRates(data.rates);
       } catch (error) {
         console.error('Failed to fetch exchange rates:', error);
-        // Fallback rates
+        // Fallback rates (removed EUR)
         setExchangeRates({
           INR: 1,
           USD: 0.012,
-          EUR: 0.011,
           AED: 0.044,
           SAR: 0.045,
           OMR: 0.0046,
@@ -210,7 +165,7 @@ const PriceCalculator = () => {
   }, []);
 
   const calculatePrice = () => {
-    if (!onionSize || !packaging) return { perTon: 0, perContainer: 0 };
+    if (!onionSize || !packaging) return { perKg: 0, perTon: 0, perContainer: 0 };
 
     const basePrice = basePrices[onionSize as keyof typeof basePrices];
     const packagingModifier = packagingModifiers[packaging as keyof typeof packagingModifiers];
@@ -226,13 +181,14 @@ const PriceCalculator = () => {
     const convertedPricePerKg = finalPricePerKg * exchangeRate;
     
     // Calculate per ton (1000 kg) and per container (29 tons)
+    const perKg = convertedPricePerKg;
     const perTon = convertedPricePerKg * 1000;
     const perContainer = convertedPricePerKg * 29000;
     
-    return { perTon, perContainer };
+    return { perKg, perTon, perContainer };
   };
 
-  const { perTon, perContainer } = calculatePrice();
+  const { perKg, perTon, perContainer } = calculatePrice();
 
   const formatCurrency = (amount: number, currencyCode: string) => {
     const symbol = currencySymbols[currencyCode as keyof typeof currencySymbols];
@@ -361,7 +317,7 @@ Thank you!`;
                 </Select>
               </div>
 
-              {/* Currency */}
+              {/* Currency (removed EUR) */}
               <div className="space-y-2">
                 <Label htmlFor="currency" className="text-base font-medium">
                   {t.currency}
@@ -373,7 +329,6 @@ Thank you!`;
                   <SelectContent>
                     <SelectItem value="INR">INR (₹) - Indian Rupee</SelectItem>
                     <SelectItem value="USD">USD ($) - US Dollar</SelectItem>
-                    <SelectItem value="EUR">EUR (€) - Euro</SelectItem>
                     <SelectItem value="AED">AED (د.إ) - UAE Dirham</SelectItem>
                     <SelectItem value="SAR">SAR (﷼) - Saudi Riyal</SelectItem>
                     <SelectItem value="OMR">OMR (ر.ع.) - Omani Rial</SelectItem>
@@ -404,6 +359,15 @@ Thank you!`;
               {onionSize && packaging ? (
                 <>
                   <div className="space-y-4">
+                    <div className="bg-white p-6 rounded-lg shadow-sm">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                        {t.pricePerKg}
+                      </h3>
+                      <p className="text-3xl font-bold text-green-600">
+                        {formatCurrency(perKg, currency)}
+                      </p>
+                    </div>
+
                     <div className="bg-white p-6 rounded-lg shadow-sm">
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">
                         {t.pricePerTon}
