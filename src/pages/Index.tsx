@@ -20,7 +20,7 @@ const Index = () => {
       <Certifications />
       <OtherProducts />
       <Testimonials />
-      <div id="price-calculator" className="bg-gradient-to-br from-navy-50 via-white to-turquoise-50 py-16">
+      /* <div id="price-calculator" className="bg-gradient-to-br from-navy-50 via-white to-turquoise-50 py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
@@ -32,7 +32,7 @@ const Index = () => {
           </div>
           <PriceCalculator />
         </div>
-      </div>
+      </div> */
       <Footer />
       <WhatsAppWidget />
     </div>
