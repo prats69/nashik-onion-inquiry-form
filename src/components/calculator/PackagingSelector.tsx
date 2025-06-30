@@ -12,7 +12,7 @@ export const PackagingSelector = ({ packaging, setPackaging, t }: PackagingSelec
   return (
     <div className="space-y-2">
       <Label htmlFor="packaging" className="text-base font-medium">
-        {t.packagingType}
+        {t.packagingType} <span className="text-red-500">*</span>
       </Label>
       <Select value={packaging} onValueChange={setPackaging}>
         <SelectTrigger>
@@ -23,6 +23,8 @@ export const PackagingSelector = ({ packaging, setPackaging, t }: PackagingSelec
           <SelectItem value="10kg-red-mesh">10kg Red Mesh Bag</SelectItem>
           <SelectItem value="18kg-red-mesh">18kg Red Mesh Bag</SelectItem>
           <SelectItem value="20kg-red-mesh">20kg Red Mesh Bag</SelectItem>
+          <SelectItem value="25kg-jute">25kg Jute Bag</SelectItem>
+          <SelectItem value="50kg-jute">50kg Jute Bag</SelectItem>
         </SelectContent>
       </Select>
     </div>

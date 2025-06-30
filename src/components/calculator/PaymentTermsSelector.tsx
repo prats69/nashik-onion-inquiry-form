@@ -9,29 +9,21 @@ interface PaymentTermsSelectorProps {
 }
 
 export const PaymentTermsSelector = ({ paymentTerms, setPaymentTerms, t }: PaymentTermsSelectorProps) => {
-  const paymentTermsOptions = [
-    { value: "100-advance", label: "100% Advance Payment" },
-    { value: "50-50", label: "50% Advance / 50% Before Shipment" },
-    { value: "lc-sight", label: "LC at Sight" },
-    { value: "cad", label: "CAD (Cash Against Documents)" },
-    { value: "credit", label: "Payment after Delivery (Credit)" }
-  ];
-
   return (
     <div className="space-y-2">
-      <Label htmlFor="payment-terms" className="text-base font-medium">
-        {t.paymentTerms || "Payment Terms"}
+      <Label htmlFor="paymentTerms" className="text-base font-medium">
+        {t.paymentTerms || "Payment Terms"} <span className="text-red-500">*</span>
       </Label>
       <Select value={paymentTerms} onValueChange={setPaymentTerms}>
         <SelectTrigger>
           <SelectValue placeholder={t.selectPaymentTerms || "Select payment terms"} />
         </SelectTrigger>
         <SelectContent>
-          {paymentTermsOptions.map((option) => (
-            <SelectItem key={option.value} value={option.value}>
-              {option.label}
-            </SelectItem>
-          ))}
+          <SelectItem value="100-advance">100% Advance Payment</SelectItem>
+          <SelectItem value="50-50">50% Advance / 50% Before Shipment</SelectItem>
+          <SelectItem value="lc-sight">LC at Sight</SelectItem>
+          <SelectItem value="cad">CAD (Cash Against Documents)</SelectItem>
+          <SelectItem value="credit">Payment after Delivery (Credit)</SelectItem>
         </SelectContent>
       </Select>
     </div>

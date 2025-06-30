@@ -12,25 +12,25 @@ export const CurrencySelector = ({ currency, setCurrency, t }: CurrencySelectorP
   return (
     <div className="space-y-2">
       <Label htmlFor="currency" className="text-base font-medium">
-        {t.currency}
+        {t.currency} <span className="text-red-500">*</span>
       </Label>
       <Select value={currency} onValueChange={setCurrency}>
         <SelectTrigger>
           <SelectValue placeholder={t.selectCurrency} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="USD">USD ($) - US Dollar</SelectItem>
-          <SelectItem value="INR">INR (₹) - Indian Rupee</SelectItem>
-          <SelectItem value="AED">AED (د.إ) - UAE Dirham</SelectItem>
-          <SelectItem value="SAR">SAR (﷼) - Saudi Riyal</SelectItem>
-          <SelectItem value="OMR">OMR (ر.ع.) - Omani Rial</SelectItem>
-          <SelectItem value="BHD">BHD (.د.ب) - Bahraini Dinar</SelectItem>
-          <SelectItem value="QAR">QAR (ر.ق) - Qatari Riyal</SelectItem>
-          <SelectItem value="KWD">KWD (د.ك) - Kuwaiti Dinar</SelectItem>
-          <SelectItem value="MYR">MYR (RM) - Malaysian Ringgit</SelectItem>
-          <SelectItem value="IDR">IDR (Rp) - Indonesian Rupiah</SelectItem>
-          <SelectItem value="LKR">LKR (₨) - Sri Lankan Rupee</SelectItem>
-          <SelectItem value="MVR">MVR (ރ.) - Maldivian Rufiyaa</SelectItem>
+          <SelectItem value="USD">USD ($)</SelectItem>
+          <SelectItem value="INR">INR (₹)</SelectItem>
+          <SelectItem value="AED">AED (د.إ)</SelectItem>
+          <SelectItem value="SAR">SAR (﷼)</SelectItem>
+          <SelectItem value="OMR">OMR (ر.ع.)</SelectItem>
+          <SelectItem value="BHD">BHD (.د.ب)</SelectItem>
+          <SelectItem value="QAR">QAR (ر.ق)</SelectItem>
+          <SelectItem value="KWD">KWD (د.ك)</SelectItem>
+          <SelectItem value="MYR">MYR (RM)</SelectItem>
+          <SelectItem value="IDR">IDR (Rp)</SelectItem>
+          <SelectItem value="LKR">LKR (₨)</SelectItem>
+          <SelectItem value="MVR">MVR (ރ.)</SelectItem>
         </SelectContent>
       </Select>
     </div>

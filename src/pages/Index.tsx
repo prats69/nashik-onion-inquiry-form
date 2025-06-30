@@ -20,8 +20,18 @@ const Index = () => {
       <Certifications />
       <OtherProducts />
       <Testimonials />
-      <div id="price-calculator">
-        <PriceCalculator />
+      <div id="price-calculator" className="bg-gradient-to-br from-navy-50 via-white to-turquoise-50 py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Get <span className="text-navy-600">Today's EXW Price</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Calculate instant pricing for premium red onions based on your specifications
+            </p>
+          </div>
+          <PriceCalculator />
+        </div>
       </div>
       <Footer />
       <WhatsAppWidget />

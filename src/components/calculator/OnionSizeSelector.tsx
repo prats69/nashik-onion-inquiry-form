@@ -11,15 +11,15 @@ interface OnionSizeSelectorProps {
 export const OnionSizeSelector = ({ onionSize, setOnionSize, t }: OnionSizeSelectorProps) => {
   return (
     <div className="space-y-2">
-      <Label htmlFor="onion-size" className="text-base font-medium">
-        {t.onionSize}
+      <Label htmlFor="onionSize" className="text-base font-medium">
+        {t.onionSize} <span className="text-red-500">*</span>
       </Label>
       <Select value={onionSize} onValueChange={setOnionSize}>
         <SelectTrigger>
           <SelectValue placeholder={t.selectSize} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="40-45mm">40–45mm</SelectItem>
+          <SelectItem value="40-45mm">40-45mm</SelectItem>
           <SelectItem value="45mm+">45mm+</SelectItem>
           <SelectItem value="50mm+">50mm+</SelectItem>
           <SelectItem value="55mm+">55mm+</SelectItem>

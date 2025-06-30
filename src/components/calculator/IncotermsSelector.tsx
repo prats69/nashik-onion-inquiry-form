@@ -20,7 +20,7 @@ export const IncotermsSelector = ({ incoterms, setIncoterms, t }: IncotermsSelec
   return (
     <div className="space-y-2">
       <Label htmlFor="incoterms" className="text-base font-medium">
-        {t.incoterms || "Incoterms"}
+        {t.incoterms || "Incoterms"} <span className="text-red-500">*</span>
       </Label>
       <Select value={incoterms} onValueChange={setIncoterms}>
         <SelectTrigger>

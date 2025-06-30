@@ -29,12 +29,14 @@ const PriceCalculator = () => {
     "55mm+": 18.5,
   };
 
-  // Packaging modifiers per kg in INR (hidden from UI)
+  // Updated packaging modifiers to include jute bags
   const packagingModifiers = {
     "5kg-red-mesh": 1.00,
     "10kg-red-mesh": 0.00,
     "18kg-red-mesh": -0.25,
     "20kg-red-mesh": -0.25,
+    "25kg-jute": -0.25,  // Same as 20kg red mesh
+    "50kg-jute": -0.25,  // Same as 20kg red mesh
   };
 
   // Currency symbols and formatting
@@ -84,11 +86,12 @@ const PriceCalculator = () => {
       selectPaymentTerms: "Select payment terms",
       loadingRates: "Loading exchange rates...",
       selectToCalculate: "Select onion size, packaging type, and payment terms to see calculated prices",
-      lastUpdated: "Last updated: June 30, 2025",
+      lastUpdated: "Last updated: 30th June 2025",
       fobNote: "Note: Prices are EXW India and may change with freight, certification or destination port.",
       approximateNote: "Note: These are approximate rates, a variation of upto 5% should be considered. Actual prices will depend on realtime bank exchange rates.",
       calculatePricing: "Calculate Pricing",
-      fillAllFields: "Please fill all required fields to calculate pricing"
+      fillAllFields: "Please fill all required fields to calculate pricing",
+      creditPaymentNote: "We don't accept payment after delivery. Please select a different payment term."
     },
     ar: {
       title: "حاسبة أسعار البصل",
@@ -123,7 +126,8 @@ const PriceCalculator = () => {
       fobNote: "ملاحظة: الأسعار EXW الهند وقد تتغير مع الشحن أو الشهادات أو ميناء الوجهة.",
       approximateNote: "ملاحظة: هذه أسعار تقريبية، يجب النظر في تباين يصل إلى 5%. ستعتمد الأسعار الفعلية على أسعار صرف البنوك في الوقت الفعلي.",
       calculatePricing: "احسب التسعير",
-      fillAllFields: "يرجى ملء جميع الحقول المطلوبة لحساب التسعير"
+      fillAllFields: "يرجى ملء جميع الحقول المطلوبة لحساب التسعير",
+      creditPaymentNote: "نحن لا نقبل الدفع بعد التسليم. يرجى اختيار شرط دفع مختلف."
     },
     ms: {
       title: "Kalkulator Harga Bawang",
@@ -158,7 +162,8 @@ const PriceCalculator = () => {
       fobNote: "Nota: Harga adalah EXW India dan mungkin berubah dengan pengangkutan, pensijilan atau pelabuhan destinasi.",
       approximateNote: "Nota: Ini adalah kadar anggaran, variasi sehingga 5% harus dipertimbangkan. Harga sebenar bergantung pada kadar pertukaran bank masa nyata.",
       calculatePricing: "Kira Harga",
-      fillAllFields: "Sila isi semua medan yang diperlukan untuk mengira harga"
+      fillAllFields: "Sila isi semua medan yang diperlukan untuk mengira harga",
+      creditPaymentNote: "Kami tidak menerima pembayaran selepas pengiriman. Sila pilih terma pembayaran yang berbeza."
     },
     id: {
       title: "Kalkulator Harga Bawang",
@@ -193,7 +198,8 @@ const PriceCalculator = () => {
       fobNote: "Catatan: Harga adalah EXW India dan dapat berubah dengan freight, sertifikasi atau pelabuhan tujuan.",
       approximateNote: "Catatan: Ini adalah tarif perkiraan, variasi hingga 5% harus dipertimbangkan. Harga aktual akan tergantung pada nilai tukar bank real-time.",
       calculatePricing: "Hitung Harga",
-      fillAllFields: "Harap isi semua bidang yang diperlukan untuk menghitung harga"
+      fillAllFields: "Harap isi semua bidang yang diperlukan untuk menghitung harga",
+      creditPaymentNote: "Kami tidak menerima pembayaran setelah pengiriman. Silakan pilih syarat pembayaran yang berbeda."
     },
     si: {
       title: "ළූණු මිල ගණකය",
@@ -228,7 +234,8 @@ const PriceCalculator = () => {
       fobNote: "සටහන: මිල EXW ඉන්දියාව වන අතර ප්‍රවාහනය, සහතිකය හෝ ගමනාන්ත වරාය සමඟ වෙනස් විය හැක.",
       approximateNote: "සටහන: මේවා ආසන්න වශයෙන් අනුපාත වන අතර, 5% දක්වා වෙනසක් සලකා බැලිය යුතුය. නියම මිල තත්‍ය කාල බැංකු විනිමය අනුපාත මත රඳා පවතී.",
       calculatePricing: "මිල ගණනය කරන්න",
-      fillAllFields: "මිල ගණනය කිරීමට අවශ්‍ය සියලුම ක්ෂේත්‍ර පුරවන්න"
+      fillAllFields: "මිල ගණනය කිරීමට අවශ්‍ය සියලුම ක්ෂේත්‍ර පුරවන්න",
+      creditPaymentNote: "අපි බෙදා හරින පසු ගෙවීම් පිළිගන්නේ නැත. කරුණාකර වෙනත් ගෙවීම් කොන්දේසියක් තෝරන්න."
     },
     dv: {
       title: "ބަސްއަޅާގެ ޕްރައިސް ކެލްކްއުލޭޓަރ",
@@ -263,7 +270,8 @@ const PriceCalculator = () => {
       fobNote: "ނޯޓް: ޕްރައިސް އަކީ EXW އިންޑިޔާ އަދި ފްރެއިޓް، ސެޓިފިކޭޝަން ނުވަތަ ޑެސްޓިނޭޝަން ޕޯޓާ އެކު ބަދަލުވެދާނެ ޕްރައިސެއް",
       approximateNote: "ނޯޓް: މި އަކީ އަޕްރޮކްސިމޭޓް ރޭޓްތައް، 5% އަށް ޤަރީބުވާ ވެރިއޭޝަނެއް ކޮންސިޑަރު ކުރަން ޖެހޭ. އަސްލު ޕްރައިސް ބޭނުންވަނީ ރިއަލް ޓައިމް ބޭންކް އެކްސްޗެއިންޖް ރޭޓް މައްޗަށް",
       calculatePricing: "ޕްރައިސް ކެލްކްއުލޭޓް ކުރާ",
-      fillAllFields: "ޕްރައިސް ކެލްކްއުލޭޓް ކުރުމަށް ޖަހާ ފީލްޑް ފުރާ"
+      fillAllFields: "ޕްރައިސް ކެލްކްއުލޭޓް ކުރުމަށް ޖަހާ ފީލްޑް ފުރާ",
+      creditPaymentNote: "އަހަރެމެން ޑެލިވަރީ ކޮށްގެން ފައިސާ ނާނގޭ. ދެނެއް ޕޭމަންޓް ޓާމް ޚޮއްސާ."
     }
   };
 
@@ -279,7 +287,6 @@ const PriceCalculator = () => {
         setExchangeRates(data.rates);
       } catch (error) {
         console.error('Failed to fetch exchange rates:', error);
-        // Fallback rates
         setExchangeRates({
           INR: 1,
           USD: 0.012,
@@ -337,13 +344,12 @@ const PriceCalculator = () => {
 
   const generateWhatsAppMessage = () => {
     const sizeLabel = onionSize.replace('-', '–');
-    const packagingLabel = packaging.replace('-', ' ').replace('kg', 'kg ').replace('mesh', 'Mesh Bag');
+    const packagingLabel = packaging.replace('-', ' ').replace('kg', 'kg ').replace('mesh', 'Mesh Bag').replace('jute', 'Jute Bag');
     const quantityLabel = quantity;
     const timingLabel = orderTiming;
     const incotermsLabel = incoterms?.toUpperCase();
     const paymentLabel = paymentTerms;
     
-    // Always generate message in English with emojis
     const message = `Hi! 👋 I'm interested in getting a quote for red onions with the following specifications:
 
 🧅 Onion Size: ${sizeLabel}
@@ -373,6 +379,13 @@ Thank you! 🙏`;
   const handleCalculatePricing = () => {
     if (onionSize && packaging && currency && shippingPort && quantity && orderTiming && incoterms && paymentTerms) {
       setShowResults(true);
+      // Scroll to results section
+      setTimeout(() => {
+        const resultsElement = document.getElementById('price-results');
+        if (resultsElement) {
+          resultsElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
     } else {
       alert(t.fillAllFields);
     }
@@ -404,6 +417,7 @@ Thank you! 🙏`;
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             {t.subtitle}
           </p>
+          <p className="text-sm text-gray-500 mt-2">{t.lastUpdated}</p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
@@ -434,18 +448,32 @@ Thank you! 🙏`;
 
           {/* Results */}
           {showResults && (
-            <PriceResults
-              onionSize={onionSize}
-              packaging={packaging}
-              paymentTerms={paymentTerms}
-              perKg={perKg}
-              perTon={perTon}
-              perContainer={perContainer}
-              currency={currency}
-              formatCurrency={formatCurrency}
-              openWhatsApp={openWhatsApp}
-              translations={t}
-            />
+            <div id="price-results">
+              {paymentTerms === "credit" ? (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Info className="w-6 h-6 text-red-600" />
+                    <h3 className="text-lg font-semibold text-red-800">Payment Terms Notice</h3>
+                  </div>
+                  <p className="text-red-700">
+                    {t.creditPaymentNote}
+                  </p>
+                </div>
+              ) : (
+                <PriceResults
+                  onionSize={onionSize}
+                  packaging={packaging}
+                  paymentTerms={paymentTerms}
+                  perKg={perKg}
+                  perTon={perTon}
+                  perContainer={perContainer}
+                  currency={currency}
+                  formatCurrency={formatCurrency}
+                  openWhatsApp={openWhatsApp}
+                  translations={t}
+                />
+              )}
+            </div>
           )}
         </div>
 
