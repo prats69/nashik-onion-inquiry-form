@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Calculator, MessageCircle, Info, Globe } from "lucide-react";
 import { PriceCalculatorForm } from "@/components/calculator/PriceCalculatorForm";
@@ -44,7 +45,7 @@ const PriceCalculator = () => {
     INR: "₹",
     USD: "$",
     AED: "د.إ",
-    SAR: ﷼",
+    SAR: "﷼",
     OMR: "ر.ع.",
     BHD: ".د.ب",
     QAR: "ر.ق",
