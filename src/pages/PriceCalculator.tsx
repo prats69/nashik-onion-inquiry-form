@@ -151,11 +151,11 @@ const PriceCalculator = () => {
       selectPackaging: "Pilih jenis pembungkusan",
       selectCurrency: "Pilih mata wang",
       selectLanguage: "Pilih bahasa",
-      selectPort: "Pilih pelabuhan pilihan",
-      selectQuantity: "Pilih kuantiti",
-      selectTiming: "Pilih masa tempahan",
-      selectIncoterms: "Pilih terma perdagangan",
-      selectPaymentTerms: "Pilih terma pembayaran",
+      shippingPort: "Pilih pelabuhan pilihan",
+      quantity: "Pilih kuantiti",
+      orderTiming: "Pilih masa tempahan",
+      incoterms: "Pilih terma perdagangan",
+      paymentTerms: "Pilih terma pembayaran",
       loadingRates: "Memuatkan kadar pertukaran...",
       selectToCalculate: "Pilih saiz bawang, jenis pembungkusan dan terma pembayaran untuk melihat harga dikira",
       lastUpdated: "Kemaskini terakhir: 30 Jun 2025",
@@ -187,10 +187,10 @@ const PriceCalculator = () => {
       selectPackaging: "Pilih jenis kemasan",
       selectCurrency: "Pilih mata uang",
       selectLanguage: "Pilih bahasa",
-      selectPort: "Pilih pelabuhan pilihan",
-      selectQuantity: "Pilih kuantitas",
-      selectTiming: "Pilih waktu pemesanan",
-      selectIncoterms: "Pilih incoterms",
+      shippingPort: "Pilih pelabuhan pilihan",
+      quantity: "Pilih kuantitas",
+      orderTiming: "Pilih waktu pemesanan",
+      incoterms: "Pilih incoterms",
       selectPaymentTerms: "Pilih syarat pembayaran",
       loadingRates: "Memuat nilai tukar...",
       selectToCalculate: "Pilih ukuran bawang, jenis kemasan dan syarat pembayaran untuk melihat harga terhitung",
@@ -223,7 +223,7 @@ const PriceCalculator = () => {
       selectPackaging: "ඇසුරුම් වර්ගය තෝරන්න",
       selectCurrency: "මුදල් තෝරන්න",
       selectLanguage: "භාෂාව තෝරන්න",
-      selectPort: "කැමති වරාය තෝරන්න",
+      shippingPort: "කැමති වරාය තෝරන්න",
       selectQuantity: "ප්‍රමාණය තෝරන්න",
       selectTiming: "ඇණවුම් කාලය තෝරන්න",
       selectIncoterms: "ඉන්කෝටර්ම්ස් තෝරන්න",
@@ -259,8 +259,8 @@ const PriceCalculator = () => {
       selectPackaging: "ޕެކޭޖިންގ ވާރު ޚޮއްސާ",
       selectCurrency: "ފައިސާ ޚޮއްސާ",
       selectLanguage: "ބަސް ޚޮއްސާ",
-      selectPort: "ވަޑައިގަންނަ ޕޯޓް ޚޮއްސާ",
-      selectQuantity: "މިންޒަތް ޚޮއްސާ",
+      shippingPort: "ވަޑައިގަންނަ ޕޯޓް ޚޮއްސާ",
+      quantity: "މިންޒަތް ޚޮއްސާ",
       selectTiming: "އޯޑަރު ވައިޚަތު ޚޮއްސާ",
       selectIncoterms: "އިންކޯޓާމްސް ޚޮއްސާ",
       selectPaymentTerms: "ފައިސާ އަދާކުރުމުގެ ޝަރުތު ޚޮއްސާ",
@@ -393,33 +393,7 @@ Thank you! 🙏`;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-navy-50 via-white to-turquoise-50">
-      {/* Header */}
-      <div className="w-full bg-white py-4 shadow-sm">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-center">
-            <img 
-              src="/zoko-logo.png" 
-              alt="Zoko Group of Companies" 
-              className="h-16 w-auto"
-            />
-          </div>
-        </div>
-      </div>
-
       <div className="container mx-auto px-4 py-12">
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Calculator className="w-8 h-8 text-navy-600" />
-            <h1 className="text-4xl font-bold text-gray-900">
-              {t.title.split(' ').slice(0, 2).join(' ')} <span className="text-navy-600">{t.title.split(' ').slice(2).join(' ')}</span>
-            </h1>
-          </div>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            {t.subtitle}
-          </p>
-          <p className="text-sm text-gray-500 mt-2">{t.lastUpdated}</p>
-        </div>
-
         <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {/* Calculator Form */}
           <PriceCalculatorForm
