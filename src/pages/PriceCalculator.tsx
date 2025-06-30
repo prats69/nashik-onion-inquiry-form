@@ -1,28 +1,23 @@
+
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
 import { Calculator, MessageCircle, Info, Globe } from "lucide-react";
+import { PriceCalculatorForm } from "@/components/calculator/PriceCalculatorForm";
+import { PriceResults } from "@/components/calculator/PriceResults";
 
 interface ExchangeRates {
   [key: string]: number;
 }
 
-interface LanguageOption {
-  code: string;
-  name: string;
-  nativeName: string;
-}
-
 const PriceCalculator = () => {
   const [onionSize, setOnionSize] = useState<string>("");
   const [packaging, setPackaging] = useState<string>("");
-  const [currency, setCurrency] = useState<string>("USD"); // Default to USD
+  const [currency, setCurrency] = useState<string>("USD");
   const [language, setLanguage] = useState<string>("en");
   const [shippingPort, setShippingPort] = useState<string>("");
   const [quantity, setQuantity] = useState<string>("");
   const [orderTiming, setOrderTiming] = useState<string>("");
+  const [incoterms, setIncoterms] = useState<string>("");
+  const [paymentTerms, setPaymentTerms] = useState<string>("");
   const [exchangeRates, setExchangeRates] = useState<ExchangeRates>({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -53,63 +48,10 @@ const PriceCalculator = () => {
     QAR: "ر.ق",
     KWD: "د.ك",
     MYR: "RM",
+    IDR: "Rp",
+    LKR: "₨",
+    MVR: "ރ.",
   };
-
-  // Language options based on currencies offered
-  const languageOptions: LanguageOption[] = [
-    { code: "en", name: "English", nativeName: "English" },
-    { code: "ar", name: "Arabic", nativeName: "العربية" },
-    { code: "ms", name: "Malay", nativeName: "Bahasa Melayu" },
-  ];
-
-  // All shipping ports (currency independent, excludes USA and Indian ports)
-  const allShippingPorts = [
-    "Jebel Ali, Dubai",
-    "Abu Dhabi Port",
-    "Sharjah Port",
-    "Fujairah Port",
-    "Jeddah Islamic Port",
-    "King Abdulaziz Port, Dammam",
-    "Yanbu Commercial Port",
-    "Jizan Port",
-    "Port Sultan Qaboos, Muscat",
-    "Sohar Port",
-    "Salalah Port",
-    "Khalifa Bin Salman Port",
-    "Mina Salman Port",
-    "Hamad Port, Doha",
-    "Mesaieed Port",
-    "Ras Laffan Port",
-    "Shuwaikh Port",
-    "Shuaiba Port",
-    "Doha Port",
-    "Port Klang",
-    "Johor Port",
-    "Penang Port",
-    "Kuantan Port"
-  ];
-
-  // Quantity options
-  const quantityOptions = [
-    { value: "1", label: "1 Container (29 MT)" },
-    { value: "2", label: "2 Containers (58 MT)" },
-    { value: "3", label: "3 Containers (87 MT)" },
-    { value: "4", label: "4 Containers (116 MT)" },
-    { value: "5", label: "5 Containers (145 MT)" },
-    { value: "10", label: "10 Containers (290 MT)" },
-    { value: "20", label: "20 Containers (580 MT)" },
-    { value: "custom", label: "Custom Quantity" }
-  ];
-
-  // Order timing options
-  const orderTimingOptions = [
-    { value: "immediate", label: "Immediate (Within 1 week)" },
-    { value: "2weeks", label: "Within 2 weeks" },
-    { value: "1month", label: "Within 1 month" },
-    { value: "2months", label: "Within 2 months" },
-    { value: "3months", label: "Within 3 months" },
-    { value: "flexible", label: "Flexible timing" }
-  ];
 
   // Translations object
   const translations = {
@@ -124,6 +66,8 @@ const PriceCalculator = () => {
       shippingPort: "Preferred Shipping Port",
       quantity: "Quantity Required",
       orderTiming: "Order Timing",
+      incoterms: "Incoterms",
+      paymentTerms: "Payment Terms",
       calculatedPrices: "Calculated Prices",
       pricePerKg: "Final Price per KG",
       pricePerTon: "Final Price per Ton",
@@ -136,9 +80,11 @@ const PriceCalculator = () => {
       selectPort: "Select preferred port",
       selectQuantity: "Select quantity",
       selectTiming: "Select order timing",
+      selectIncoterms: "Select incoterms",
+      selectPaymentTerms: "Select payment terms",
       loadingRates: "Loading exchange rates...",
-      selectToCalculate: "Select onion size and packaging type to see calculated prices",
-      lastUpdated: "Last updated: June 25, 2025",
+      selectToCalculate: "Select onion size, packaging type, and payment terms to see calculated prices",
+      lastUpdated: "Last updated: June 30, 2025",
       fobNote: "Note: Prices are EXW India and may change with freight, certification or destination port.",
       approximateNote: "Note: These are approximate rates, a variation of upto 5% should be considered. Actual prices will depend on realtime bank exchange rates."
     },
@@ -153,6 +99,8 @@ const PriceCalculator = () => {
       shippingPort: "ميناء الشحن المفضل",
       quantity: "الكمية المطلوبة",
       orderTiming: "توقيت الطلب",
+      incoterms: "شروط التجارة الدولية",
+      paymentTerms: "شروط الدفع",
       calculatedPrices: "الأسعار المحسوبة",
       pricePerKg: "السعر النهائي لكل كيلوغرام",
       pricePerTon: "السعر النهائي لكل طن",
@@ -165,9 +113,11 @@ const PriceCalculator = () => {
       selectPort: "اختر الميناء المفضل",
       selectQuantity: "اختر الكمية",
       selectTiming: "اختر توقيت الطلب",
+      selectIncoterms: "اختر شروط التجارة",
+      selectPaymentTerms: "اختر شروط الدفع",
       loadingRates: "تحميل أسعار الصرف...",
-      selectToCalculate: "اختر حجم البصل ونوع التغليف لرؤية الأسعار المحسوبة",
-      lastUpdated: "آخر تحديث: 25 يونيو 2025",
+      selectToCalculate: "اختر حجم البصل ونوع التغليف وشروط الدفع لرؤية الأسعار المحسوبة",
+      lastUpdated: "آخر تحديث: 30 يونيو 2025",
       fobNote: "ملاحظة: الأسعار EXW الهند وقد تتغير مع الشحن أو الشهادات أو ميناء الوجهة.",
       approximateNote: "ملاحظة: هذه أسعار تقريبية، يجب النظر في تباين يصل إلى 5%. ستعتمد الأسعار الفعلية على أسعار صرف البنوك في الوقت الفعلي."
     },
@@ -182,6 +132,8 @@ const PriceCalculator = () => {
       shippingPort: "Pelabuhan Penghantaran Pilihan",
       quantity: "Kuantiti Diperlukan",
       orderTiming: "Masa Tempahan",
+      incoterms: "Terma Perdagangan Antarabangsa",
+      paymentTerms: "Terma Pembayaran",
       calculatedPrices: "Harga Dikira",
       pricePerKg: "Harga Akhir Setiap KG",
       pricePerTon: "Harga Akhir Setiap Tan",
@@ -194,9 +146,11 @@ const PriceCalculator = () => {
       selectPort: "Pilih pelabuhan pilihan",
       selectQuantity: "Pilih kuantiti",
       selectTiming: "Pilih masa tempahan",
+      selectIncoterms: "Pilih terma perdagangan",
+      selectPaymentTerms: "Pilih terma pembayaran",
       loadingRates: "Memuatkan kadar pertukaran...",
-      selectToCalculate: "Pilih saiz bawang dan jenis pembungkusan untuk melihat harga dikira",
-      lastUpdated: "Kemaskini terakhir: 25 Jun 2025",
+      selectToCalculate: "Pilih saiz bawang, jenis pembungkusan dan terma pembayaran untuk melihat harga dikira",
+      lastUpdated: "Kemaskini terakhir: 30 Jun 2025",
       fobNote: "Nota: Harga adalah EXW India dan mungkin berubah dengan pengangkutan, pensijilan atau pelabuhan destinasi.",
       approximateNote: "Nota: Ini adalah kadar anggaran, variasi sehingga 5% harus dipertimbangkan. Harga sebenar bergantung pada kadar pertukaran bank masa nyata."
     }
@@ -225,6 +179,9 @@ const PriceCalculator = () => {
           QAR: 0.044,
           KWD: 0.0037,
           MYR: 0.053,
+          IDR: 0.18,
+          LKR: 3.65,
+          MVR: 0.18,
         });
       }
       setIsLoading(false);
@@ -270,8 +227,10 @@ const PriceCalculator = () => {
   const generateWhatsAppMessage = () => {
     const sizeLabel = onionSize.replace('-', '–');
     const packagingLabel = packaging.replace('-', ' ').replace('kg', 'kg ').replace('mesh', 'Mesh Bag');
-    const quantityLabel = quantityOptions.find(q => q.value === quantity)?.label || quantity;
-    const timingLabel = orderTimingOptions.find(t => t.value === orderTiming)?.label || orderTiming;
+    const quantityLabel = quantity;
+    const timingLabel = orderTiming;
+    const incotermsLabel = incoterms?.toUpperCase();
+    const paymentLabel = paymentTerms;
     
     // Always generate message in English with emojis
     const message = `Hi! 👋 I'm interested in getting a quote for red onions with the following specifications:
@@ -280,9 +239,11 @@ const PriceCalculator = () => {
 📦 Packaging: ${packagingLabel}
 💰 Estimated Price: ${formatCurrency(perTon, currency)} per ton
 📊 Container Price (29T): ${formatCurrency(perContainer, currency)}
-📈 Quantity Required: ${quantityLabel}
+📈 Quantity Required: ${quantityLabel} containers
 ⏱️ Order Timing: ${timingLabel}
 🚢 Preferred Port: ${shippingPort || 'To be discussed'}
+📋 Incoterms: ${incotermsLabel || 'To be discussed'}
+💳 Payment Terms: ${paymentLabel || 'To be discussed'}
 
 Please provide me with a detailed quote including freight costs and delivery terms.
 
@@ -293,7 +254,7 @@ Thank you! 🙏`;
   };
 
   const openWhatsApp = () => {
-    if (onionSize && packaging) {
+    if (onionSize && packaging && paymentTerms && paymentTerms !== "credit") {
       window.open(generateWhatsAppMessage(), '_blank');
     }
   };
@@ -328,230 +289,42 @@ Thank you! 🙏`;
 
         <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {/* Calculator Form */}
-          <Card className="shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl text-gray-900 flex items-center gap-2">
-                <Calculator className="w-6 h-6 text-navy-600" />
-                {t.calculatePrice}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Language Selection */}
-              <div className="space-y-2">
-                <Label htmlFor="language" className="text-base font-medium flex items-center gap-2">
-                  <Globe className="w-4 h-4" />
-                  {t.language}
-                </Label>
-                <Select value={language} onValueChange={setLanguage}>
-                  <SelectTrigger>
-                    <SelectValue placeholder={t.selectLanguage} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {languageOptions.map((lang) => (
-                      <SelectItem key={lang.code} value={lang.code}>
-                        {lang.nativeName} ({lang.name})
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Onion Size */}
-              <div className="space-y-2">
-                <Label htmlFor="onion-size" className="text-base font-medium">
-                  {t.onionSize}
-                </Label>
-                <Select value={onionSize} onValueChange={setOnionSize}>
-                  <SelectTrigger>
-                    <SelectValue placeholder={t.selectSize} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="40-45mm">40–45mm</SelectItem>
-                    <SelectItem value="45mm+">45mm+</SelectItem>
-                    <SelectItem value="50mm+">50mm+</SelectItem>
-                    <SelectItem value="55mm+">55mm+</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Packaging Type */}
-              <div className="space-y-2">
-                <Label htmlFor="packaging" className="text-base font-medium">
-                  {t.packagingType}
-                </Label>
-                <Select value={packaging} onValueChange={setPackaging}>
-                  <SelectTrigger>
-                    <SelectValue placeholder={t.selectPackaging} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="5kg-red-mesh">5kg Red Mesh Bag</SelectItem>
-                    <SelectItem value="10kg-red-mesh">10kg Red Mesh Bag</SelectItem>
-                    <SelectItem value="18kg-red-mesh">18kg Red Mesh Bag</SelectItem>
-                    <SelectItem value="20kg-red-mesh">20kg Red Mesh Bag</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Currency */}
-              <div className="space-y-2">
-                <Label htmlFor="currency" className="text-base font-medium">
-                  {t.currency}
-                </Label>
-                <Select value={currency} onValueChange={setCurrency}>
-                  <SelectTrigger>
-                    <SelectValue placeholder={t.selectCurrency} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="USD">USD ($) - US Dollar</SelectItem>
-                    <SelectItem value="INR">INR (₹) - Indian Rupee</SelectItem>
-                    <SelectItem value="AED">AED (د.إ) - UAE Dirham</SelectItem>
-                    <SelectItem value="SAR">SAR (﷼) - Saudi Riyal</SelectItem>
-                    <SelectItem value="OMR">OMR (ر.ع.) - Omani Rial</SelectItem>
-                    <SelectItem value="BHD">BHD (.د.ب) - Bahraini Dinar</SelectItem>
-                    <SelectItem value="QAR">QAR (ر.ق) - Qatari Riyal</SelectItem>
-                    <SelectItem value="KWD">KWD (د.ك) - Kuwaiti Dinar</SelectItem>
-                    <SelectItem value="MYR">MYR (RM) - Malaysian Ringgit</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Shipping Port */}
-              <div className="space-y-2">
-                <Label htmlFor="shipping-port" className="text-base font-medium">
-                  {t.shippingPort}
-                </Label>
-                <Select value={shippingPort} onValueChange={setShippingPort}>
-                  <SelectTrigger>
-                    <SelectValue placeholder={t.selectPort} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {allShippingPorts.map((port) => (
-                      <SelectItem key={port} value={port}>
-                        {port}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Quantity */}
-              <div className="space-y-2">
-                <Label htmlFor="quantity" className="text-base font-medium">
-                  {t.quantity}
-                </Label>
-                <Select value={quantity} onValueChange={setQuantity}>
-                  <SelectTrigger>
-                    <SelectValue placeholder={t.selectQuantity} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {quantityOptions.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Order Timing */}
-              <div className="space-y-2">
-                <Label htmlFor="order-timing" className="text-base font-medium">
-                  {t.orderTiming}
-                </Label>
-                <Select value={orderTiming} onValueChange={setOrderTiming}>
-                  <SelectTrigger>
-                    <SelectValue placeholder={t.selectTiming} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {orderTimingOptions.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {isLoading && (
-                <div className="text-center text-gray-500">
-                  {t.loadingRates}
-                </div>
-              )}
-            </CardContent>
-          </Card>
+          <PriceCalculatorForm
+            onionSize={onionSize}
+            setOnionSize={setOnionSize}
+            packaging={packaging}
+            setPackaging={setPackaging}
+            currency={currency}
+            setCurrency={setCurrency}
+            language={language}
+            setLanguage={setLanguage}
+            shippingPort={shippingPort}
+            setShippingPort={setShippingPort}
+            quantity={quantity}
+            setQuantity={setQuantity}
+            orderTiming={orderTiming}
+            setOrderTiming={setOrderTiming}
+            incoterms={incoterms}
+            setIncoterms={setIncoterms}
+            paymentTerms={paymentTerms}
+            setPaymentTerms={setPaymentTerms}
+            isLoading={isLoading}
+            translations={t}
+          />
 
           {/* Results */}
-          <Card className="shadow-lg bg-gradient-to-br from-navy-50 to-turquoise-50">
-            <CardHeader>
-              <CardTitle className="text-2xl text-gray-900">
-                {t.calculatedPrices}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {onionSize && packaging ? (
-                <>
-                  <div className="space-y-4">
-                    <div className="bg-white p-6 rounded-lg shadow-sm">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                        {t.pricePerKg}
-                      </h3>
-                      <p className="text-3xl font-bold text-green-600">
-                        {formatCurrency(perKg, currency)}
-                      </p>
-                    </div>
-
-                    <div className="bg-white p-6 rounded-lg shadow-sm">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                        {t.pricePerTon}
-                      </h3>
-                      <p className="text-3xl font-bold text-navy-600">
-                        {formatCurrency(perTon, currency)}
-                      </p>
-                    </div>
-
-                    <div className="bg-white p-6 rounded-lg shadow-sm">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                        {t.pricePerContainer}
-                      </h3>
-                      <p className="text-3xl font-bold text-turquoise-600">
-                        {formatCurrency(perContainer, currency)}
-                      </p>
-                    </div>
-                  </div>
-
-                  <Button 
-                    onClick={openWhatsApp}
-                    className="w-full bg-green-600 hover:bg-green-700 text-white py-4 text-lg font-semibold flex items-center gap-2"
-                  >
-                    <MessageCircle className="w-5 h-5" />
-                    {t.sendQuote}
-                  </Button>
-
-                  <div className="space-y-3 text-sm text-gray-600">
-                    <div className="flex items-start gap-2">
-                      <Info className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                      <p>{t.fobNote}</p>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <Info className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                      <p>{t.approximateNote}</p>
-                    </div>
-                  </div>
-
-                  <div className="text-xs text-gray-500">
-                    {t.lastUpdated}
-                  </div>
-                </>
-              ) : (
-                <div className="text-center py-12">
-                  <Calculator className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                  <p className="text-gray-500 text-lg">
-                    {t.selectToCalculate}
-                  </p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+          <PriceResults
+            onionSize={onionSize}
+            packaging={packaging}
+            paymentTerms={paymentTerms}
+            perKg={perKg}
+            perTon={perTon}
+            perContainer={perContainer}
+            currency={currency}
+            formatCurrency={formatCurrency}
+            openWhatsApp={openWhatsApp}
+            translations={t}
+          />
         </div>
 
         {/* Features */}

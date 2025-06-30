@@ -5,9 +5,9 @@ import FirstTimeImporters from "@/components/FirstTimeImporters";
 import Certifications from "@/components/Certifications";
 import OtherProducts from "@/components/OtherProducts";
 import Testimonials from "@/components/Testimonials";
-import InquiryForm from "@/components/InquiryForm";
 import Footer from "@/components/Footer";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
+import PriceCalculator from "./PriceCalculator";
 
 const Index = () => {
   return (
@@ -18,7 +18,9 @@ const Index = () => {
       <Certifications />
       <OtherProducts />
       <Testimonials />
-      <InquiryForm />
+      <div id="price-calculator">
+        <PriceCalculator />
+      </div>
       <Footer />
       <WhatsAppWidget />
     </div>
