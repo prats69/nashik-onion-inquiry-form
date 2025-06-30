@@ -10,7 +10,6 @@ interface IncotermsSelectorProps {
 
 export const IncotermsSelector = ({ incoterms, setIncoterms, t }: IncotermsSelectorProps) => {
   const incotermsOptions = [
-    { value: "exw", label: "EXW (Ex Works)" },
     { value: "fob", label: "FOB (Free on Board)" },
     { value: "cfr", label: "CFR (Cost and Freight)" },
     { value: "cif", label: "CIF (Cost, Insurance & Freight)" },

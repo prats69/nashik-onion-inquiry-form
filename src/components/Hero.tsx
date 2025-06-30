@@ -1,7 +1,6 @@
 
 import { Button } from "@/components/ui/button";
 import { MapPin, Award, Truck, Calculator } from "lucide-react";
-import { Link } from "react-router-dom";
 
 const Hero = () => {
   const scrollToCalculator = () => {
@@ -65,23 +64,16 @@ const Hero = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex justify-center">
                 <Button 
                   onClick={scrollToCalculator}
                   className="bg-navy-600 hover:bg-navy-700 text-white px-8 py-4 text-lg font-semibold rounded-lg transition-colors duration-300 flex items-center gap-2"
                 >
                   <Calculator className="w-5 h-5" />
-                  Check Today's Pricing
+                  Get Today's EXW Price
                 </Button>
-                <Link to="/price-calculator">
-                  <Button 
-                    className="bg-turquoise-600 hover:bg-turquoise-700 text-white px-8 py-4 text-lg font-semibold rounded-lg transition-colors duration-300 w-full"
-                  >
-                    Pricing Calculator
-                  </Button>
-                </Link>
               </div>
-              <p className="text-sm text-gray-500">Minimum order quantity: 29 MT (1 container)</p>
+              <p className="text-sm text-gray-500 text-center">Minimum order quantity: 29 MT (1 container)</p>
             </div>
 
             <div className="relative">

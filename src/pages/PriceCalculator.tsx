@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Calculator, MessageCircle, Info, Globe } from "lucide-react";
 import { PriceCalculatorForm } from "@/components/calculator/PriceCalculatorForm";
@@ -20,6 +19,7 @@ const PriceCalculator = () => {
   const [paymentTerms, setPaymentTerms] = useState<string>("");
   const [exchangeRates, setExchangeRates] = useState<ExchangeRates>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [showResults, setShowResults] = useState(false);
 
   // Base prices per kg in INR (hidden from UI)
   const basePrices = {
@@ -86,7 +86,9 @@ const PriceCalculator = () => {
       selectToCalculate: "Select onion size, packaging type, and payment terms to see calculated prices",
       lastUpdated: "Last updated: June 30, 2025",
       fobNote: "Note: Prices are EXW India and may change with freight, certification or destination port.",
-      approximateNote: "Note: These are approximate rates, a variation of upto 5% should be considered. Actual prices will depend on realtime bank exchange rates."
+      approximateNote: "Note: These are approximate rates, a variation of upto 5% should be considered. Actual prices will depend on realtime bank exchange rates.",
+      calculatePricing: "Calculate Pricing",
+      fillAllFields: "Please fill all required fields to calculate pricing"
     },
     ar: {
       title: "حاسبة أسعار البصل",
@@ -119,7 +121,9 @@ const PriceCalculator = () => {
       selectToCalculate: "اختر حجم البصل ونوع التغليف وشروط الدفع لرؤية الأسعار المحسوبة",
       lastUpdated: "آخر تحديث: 30 يونيو 2025",
       fobNote: "ملاحظة: الأسعار EXW الهند وقد تتغير مع الشحن أو الشهادات أو ميناء الوجهة.",
-      approximateNote: "ملاحظة: هذه أسعار تقريبية، يجب النظر في تباين يصل إلى 5%. ستعتمد الأسعار الفعلية على أسعار صرف البنوك في الوقت الفعلي."
+      approximateNote: "ملاحظة: هذه أسعار تقريبية، يجب النظر في تباين يصل إلى 5%. ستعتمد الأسعار الفعلية على أسعار صرف البنوك في الوقت الفعلي.",
+      calculatePricing: "احسب التسعير",
+      fillAllFields: "يرجى ملء جميع الحقول المطلوبة لحساب التسعير"
     },
     ms: {
       title: "Kalkulator Harga Bawang",
@@ -152,7 +156,114 @@ const PriceCalculator = () => {
       selectToCalculate: "Pilih saiz bawang, jenis pembungkusan dan terma pembayaran untuk melihat harga dikira",
       lastUpdated: "Kemaskini terakhir: 30 Jun 2025",
       fobNote: "Nota: Harga adalah EXW India dan mungkin berubah dengan pengangkutan, pensijilan atau pelabuhan destinasi.",
-      approximateNote: "Nota: Ini adalah kadar anggaran, variasi sehingga 5% harus dipertimbangkan. Harga sebenar bergantung pada kadar pertukaran bank masa nyata."
+      approximateNote: "Nota: Ini adalah kadar anggaran, variasi sehingga 5% harus dipertimbangkan. Harga sebenar bergantung pada kadar pertukaran bank masa nyata.",
+      calculatePricing: "Kira Harga",
+      fillAllFields: "Sila isi semua medan yang diperlukan untuk mengira harga"
+    },
+    id: {
+      title: "Kalkulator Harga Bawang",
+      subtitle: "Dapatkan harga instan untuk bawang merah premium berdasarkan spesifikasi Anda",
+      calculatePrice: "Hitung Harga Anda",
+      onionSize: "Ukuran Bawang",
+      packagingType: "Jenis Kemasan",
+      currency: "Mata Uang",
+      language: "Bahasa",
+      shippingPort: "Pelabuhan Pengiriman Pilihan",
+      quantity: "Kuantitas Diperlukan",
+      orderTiming: "Waktu Pemesanan",
+      incoterms: "Incoterms",
+      paymentTerms: "Syarat Pembayaran",
+      calculatedPrices: "Harga Terhitung",
+      pricePerKg: "Harga Akhir per KG",
+      pricePerTon: "Harga Akhir per Ton",
+      pricePerContainer: "Harga Akhir per Kontainer 29T",
+      sendQuote: "Dapatkan Penawaran Akhir di WhatsApp",
+      selectSize: "Pilih ukuran bawang",
+      selectPackaging: "Pilih jenis kemasan",
+      selectCurrency: "Pilih mata uang",
+      selectLanguage: "Pilih bahasa",
+      selectPort: "Pilih pelabuhan pilihan",
+      selectQuantity: "Pilih kuantitas",
+      selectTiming: "Pilih waktu pemesanan",
+      selectIncoterms: "Pilih incoterms",
+      selectPaymentTerms: "Pilih syarat pembayaran",
+      loadingRates: "Memuat nilai tukar...",
+      selectToCalculate: "Pilih ukuran bawang, jenis kemasan dan syarat pembayaran untuk melihat harga terhitung",
+      lastUpdated: "Terakhir diperbarui: 30 Juni 2025",
+      fobNote: "Catatan: Harga adalah EXW India dan dapat berubah dengan freight, sertifikasi atau pelabuhan tujuan.",
+      approximateNote: "Catatan: Ini adalah tarif perkiraan, variasi hingga 5% harus dipertimbangkan. Harga aktual akan tergantung pada nilai tukar bank real-time.",
+      calculatePricing: "Hitung Harga",
+      fillAllFields: "Harap isi semua bidang yang diperlukan untuk menghitung harga"
+    },
+    si: {
+      title: "ළූණු මිල ගණකය",
+      subtitle: "ඔබේ විශේෂාංග මත පදනම්ව උසස් තත්ත්වයේ රතු මූණු සඳහා ක්ෂණික මිල ගණන් ලබා ගන්න",
+      calculatePrice: "ඔබේ මිල ගණනය කරන්න",
+      onionSize: "ළූණු ප්‍රමාණය",
+      packagingType: "ඇසුරුම් වර්ගය",
+      currency: "මුදල්",
+      language: "භාෂාව",
+      shippingPort: "කැමති නැව් වරාය",
+      quantity: "අවශ්‍ය ප්‍රමාණය",
+      orderTiming: "ඇණවුම් කාලය",
+      incoterms: "ඉන්කෝටර්ම්ස්",
+      paymentTerms: "ගෙවීම් කොන්දේසි",
+      calculatedPrices: "ගණනය කළ මිල",
+      pricePerKg: "කිලෝ එකට අවසාන මිල",
+      pricePerTon: "ටනයකට අවසාන මිල",
+      pricePerContainer: "ටන් 29 කන්ටේනරයකට අවසාන මිල",
+      sendQuote: "WhatsApp හි අවසාන මිල ගණන් ලබා ගන්න",
+      selectSize: "ළූණු ප්‍රමාණය තෝරන්න",
+      selectPackaging: "ඇසුරුම් වර්ගය තෝරන්න",
+      selectCurrency: "මුදල් තෝරන්න",
+      selectLanguage: "භාෂාව තෝරන්න",
+      selectPort: "කැමති වරාය තෝරන්න",
+      selectQuantity: "ප්‍රමාණය තෝරන්න",
+      selectTiming: "ඇණවුම් කාලය තෝරන්න",
+      selectIncoterms: "ඉන්කෝටර්ම්ස් තෝරන්න",
+      selectPaymentTerms: "ගෙවීම් කොන්දේසි තෝරන්න",
+      loadingRates: "විනිමය අනුපාත පූරණය කරමින්...",
+      selectToCalculate: "ගණනය කළ මිල බැලීමට ළූණු ප්‍රමාණය, ඇසුරුම් වර්ගය සහ ගෙවීම් කොන්දේසි තෝරන්න",
+      lastUpdated: "අවසන් වරට යාවත්කාලීන කරන ලද්දේ: ජුනි 30, 2025",
+      fobNote: "සටහන: මිල EXW ඉන්දියාව වන අතර ප්‍රවාහනය, සහතිකය හෝ ගමනාන්ත වරාය සමඟ වෙනස් විය හැක.",
+      approximateNote: "සටහන: මේවා ආසන්න වශයෙන් අනුපාත වන අතර, 5% දක්වා වෙනසක් සලකා බැලිය යුතුය. නියම මිල තත්‍ය කාල බැංකු විනිමය අනුපාත මත රඳා පවතී.",
+      calculatePricing: "මිල ගණනය කරන්න",
+      fillAllFields: "මිල ගණනය කිරීමට අවශ්‍ය සියලුම ක්ෂේත්‍ර පුරවන්න"
+    },
+    dv: {
+      title: "ބަސްއަޅާގެ ޕްރައިސް ކެލްކްއުލޭޓަރ",
+      subtitle: "ތިޔާގެ ސްޕޮސިފިކޭޝަން މަތިން ޕްރީމިއަމް ރަތް ބަސްއަޅާއަށް ވަގުތުން ޕްރައިސް ހޯދާ",
+      calculatePrice: "ތިޔާގެ ޕްރައިސް ކެލްކްއުލޭޓް ކުރާ",
+      onionSize: "ބަސްއަޅާގެ ސައިޒް",
+      packagingType: "ޕެކޭޖިންގ ވާރު",
+      currency: "ފައިސާ",
+      language: "ބަސް",
+      shippingPort: "ވަޑައިގަންނަ ޕޯޓް",
+      quantity: "ޚަރދުކުރާ މިންޒަތް",
+      orderTiming: "އޯޑަރު ވައިޚަތު",
+      incoterms: "އިންކޯޓާމްސް",
+      paymentTerms: "ފައިސާ އަދާކުރުމުގެ ޝަރުތު",
+      calculatedPrices: "ކެލްކްއުލޭޓް ކުރެވިފައިވާ ޕްރައިސް",
+      pricePerKg: "ކިލޯއަށް ފައިނަލް ޕްރައިސް",
+      pricePerTon: "ޓަނަށް ފައިނަލް ޕްރައިސް",
+      pricePerContainer: "29 ޓަން ކޮންޓޭނަރަށް ފައިނަލް ޕްރައިސް",
+      sendQuote: "WhatsApp ގައި ފައިނަލް ކޯޓް ހޯދާ",
+      selectSize: "ބަސްއަޅާގެ ސައިޒް ޚޮއްސާ",
+      selectPackaging: "ޕެކޭޖިންގ ވާރު ޚޮއްސާ",
+      selectCurrency: "ފައިސާ ޚޮއްސާ",
+      selectLanguage: "ބަސް ޚޮއްސާ",
+      selectPort: "ވަޑައިގަންނަ ޕޯޓް ޚޮއްސާ",
+      selectQuantity: "މިންޒަތް ޚޮއްސާ",
+      selectTiming: "އޯޑަރު ވައިޚަތު ޚޮއްސާ",
+      selectIncoterms: "އިންކޯޓާމްސް ޚޮއްސާ",
+      selectPaymentTerms: "ފައިސާ އަދާކުރުމުގެ ޝަރުތު ޚޮއްސާ",
+      loadingRates: "އެކްސްޗެއިންޖް ރޭޓް ލޯޑް ކުރަމުން...",
+      selectToCalculate: "ކެލްކްއުލޭޓް ކުރެވިފައިވާ ޕްރައިސް ބެލުމަށް ބަސްއަޅާގެ ސައިޒް، ޕެކޭޖިންގ ވާރު އަދި ފައިސާ އަދާކުރުމުގެ ޝަރުތު ޚޮއްސާ",
+      lastUpdated: "އެންމެ ފަހުން އަޕްޑޭޓް ކުރެވުނު: ޖުން 30، 2025",
+      fobNote: "ނޯޓް: ޕްރައިސް އަކީ EXW އިންޑިޔާ އަދި ފްރެއިޓް، ސެޓިފިކޭޝަން ނުވަތަ ޑެސްޓިނޭޝަން ޕޯޓާ އެކު ބަދަލުވެދާނެ ޕްރައިސެއް",
+      approximateNote: "ނޯޓް: މި އަކީ އަޕްރޮކްސިމޭޓް ރޭޓްތައް، 5% އަށް ޤަރީބުވާ ވެރިއޭޝަނެއް ކޮންސިޑަރު ކުރަން ޖެހޭ. އަސްލު ޕްރައިސް ބޭނުންވަނީ ރިއަލް ޓައިމް ބޭންކް އެކްސްޗެއިންޖް ރޭޓް މައްޗަށް",
+      calculatePricing: "ޕްރައިސް ކެލްކްއުލޭޓް ކުރާ",
+      fillAllFields: "ޕްރައިސް ކެލްކްއުލޭޓް ކުރުމަށް ޖަހާ ފީލްޑް ފުރާ"
     }
   };
 
@@ -259,6 +370,14 @@ Thank you! 🙏`;
     }
   };
 
+  const handleCalculatePricing = () => {
+    if (onionSize && packaging && currency && shippingPort && quantity && orderTiming && incoterms && paymentTerms) {
+      setShowResults(true);
+    } else {
+      alert(t.fillAllFields);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-navy-50 via-white to-turquoise-50">
       {/* Header */}
@@ -310,21 +429,24 @@ Thank you! 🙏`;
             setPaymentTerms={setPaymentTerms}
             isLoading={isLoading}
             translations={t}
+            onCalculate={handleCalculatePricing}
           />
 
           {/* Results */}
-          <PriceResults
-            onionSize={onionSize}
-            packaging={packaging}
-            paymentTerms={paymentTerms}
-            perKg={perKg}
-            perTon={perTon}
-            perContainer={perContainer}
-            currency={currency}
-            formatCurrency={formatCurrency}
-            openWhatsApp={openWhatsApp}
-            translations={t}
-          />
+          {showResults && (
+            <PriceResults
+              onionSize={onionSize}
+              packaging={packaging}
+              paymentTerms={paymentTerms}
+              perKg={perKg}
+              perTon={perTon}
+              perContainer={perContainer}
+              currency={currency}
+              formatCurrency={formatCurrency}
+              openWhatsApp={openWhatsApp}
+              translations={t}
+            />
+          )}
         </div>
 
         {/* Features */}

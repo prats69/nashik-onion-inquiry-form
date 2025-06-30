@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle, Ship, FileText, Home, MessageCircle, CreditCard } from "lucide-react";
 
 const FirstTimeImporters = () => {
-  const scrollToInquiry = () => {
-    document.getElementById('inquiry-form')?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToCalculator = () => {
+    document.getElementById('price-calculator')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const openWhatsApp = () => {
@@ -93,10 +93,10 @@ const FirstTimeImporters = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Button 
-                onClick={scrollToInquiry}
+                onClick={scrollToCalculator}
                 className="bg-navy-600 hover:bg-navy-700 text-white px-6 py-3 rounded-lg"
               >
-                Start Your First Import
+                Get Your First Quote
               </Button>
               <Button 
                 onClick={openWhatsApp}

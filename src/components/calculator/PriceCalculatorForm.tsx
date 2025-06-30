@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Calculator } from "lucide-react";
 import { LanguageSelector } from "./LanguageSelector";
 import { OnionSizeSelector } from "./OnionSizeSelector";  
@@ -33,6 +34,7 @@ interface PriceCalculatorFormProps {
   setPaymentTerms: (value: string) => void;
   isLoading: boolean;
   translations: any;
+  onCalculate: () => void;
 }
 
 export const PriceCalculatorForm = ({
@@ -55,7 +57,8 @@ export const PriceCalculatorForm = ({
   paymentTerms,
   setPaymentTerms,
   isLoading,
-  translations
+  translations,
+  onCalculate
 }: PriceCalculatorFormProps) => {
   const t = translations;
 
@@ -83,6 +86,13 @@ export const PriceCalculatorForm = ({
             {t.loadingRates}
           </div>
         )}
+
+        <Button
+          onClick={onCalculate}
+          className="w-full bg-navy-600 hover:bg-navy-700 text-white py-3 text-lg font-semibold"
+        >
+          {t.calculatePricing}
+        </Button>
       </CardContent>
     </Card>
   );

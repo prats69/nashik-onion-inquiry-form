@@ -1,6 +1,7 @@
 
 import Hero from "@/components/Hero";
 import ProductHighlights from "@/components/ProductHighlights";
+import WhyUs from "@/components/WhyUs";
 import FirstTimeImporters from "@/components/FirstTimeImporters";
 import Certifications from "@/components/Certifications";
 import OtherProducts from "@/components/OtherProducts";
@@ -14,6 +15,7 @@ const Index = () => {
     <div className="min-h-screen font-poppins">
       <Hero />
       <ProductHighlights />
+      <WhyUs />
       <FirstTimeImporters />
       <Certifications />
       <OtherProducts />
