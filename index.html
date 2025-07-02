@@ -57,13 +57,14 @@
 
 <script>
 (function () {
+  const DEBUG = true;
+
   function getFbcFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
     const fbclid = urlParams.get("fbclid");
-    console.log("fbclid:", fbclid);
     if (fbclid) {
       const fbc = `fb.1.${Math.floor(Date.now() / 1000)}.${fbclid}`;
-      console.log("Generated _fbc:", fbc);
+      if (DEBUG) console.log("Generated _fbc:", fbc);
       document.cookie = `_fbc=${fbc}; path=/; SameSite=Lax`;
     }
   }
@@ -77,50 +78,66 @@
     return cookies[name];
   }
 
-  function handleClick() {
-    const fbcCookie = getCookieValue("_fbc");
+  function sendCapiEvent(source) {
+    const fbc = getCookieValue("_fbc") || "debug_fbc_missing";
     const payload = {
-      fbc: fbcCookie,
-      event_id: "whatsapp_click_" + Date.now()
+      fbc: fbc,
+      event_id: "whatsapp_click_" + Date.now(),
+      test_event_code: "TEST97073"
     };
-    console.log("Sending payload to Vercel API:", payload);
-    debugger;
 
-    fetch("https://v0-capi-sigma.vercel.app/api/meta-capi", {
+    if (DEBUG) {
+      console.log("🚀 Sending payload to CAPI from source:", source, payload);
+      debugger;
+    }
+
+    fetch("https://your-vercel-function-url.vercel.app/api/meta-capi", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     })
       .then((res) => res.json())
-      .then((data) => console.log("Vercel response:", data))
-      .catch((err) => console.error("Vercel error:", err));
+      .then((data) => {
+        if (DEBUG) console.log("✅ Vercel CAPI response:", data);
+      })
+      .catch((err) => console.error("❌ CAPI error:", err));
   }
 
-  function attachListenerWhenReady() {
-    const observer = new MutationObserver(() => {
-      const btn = document.querySelector('a[href*="wa.me"], a[href*="api.whatsapp.com"]');
-      if (btn) {
-        console.log("WhatsApp button found:", btn);
-        btn.addEventListener("click", handleClick);
-        observer.disconnect(); // stop watching
-      } else {
-        console.log("Still waiting for WhatsApp button...");
+  function pollForWhatsAppButtons() {
+    let found = false;
+
+    const checkButtons = () => {
+      const candidates = document.querySelectorAll("a, button");
+      candidates.forEach((el) => {
+        const text = el.textContent?.toLowerCase() || "";
+        const href = el.getAttribute("href") || "";
+        const isWhatsAppLink = href.includes("wa.me") || href.includes("api.whatsapp.com");
+        const isWhatsAppText = text.includes("whatsapp") || text.includes("get quote");
+
+        if ((isWhatsAppLink || isWhatsAppText) && !el.dataset.fbTracked) {
+          el.dataset.fbTracked = "true"; // prevent duplicate listeners
+          el.addEventListener("click", () => sendCapiEvent(el));
+          if (DEBUG) console.log("✅ Attached listener to:", el);
+          found = true;
+        }
+      });
+
+      if (!found && DEBUG) {
+        console.log("⏳ Polling... No matching WhatsApp button yet.");
       }
-    });
+    };
 
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
-    });
+    setInterval(checkButtons, 500); // poll every 500ms
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
-    console.log("DOM ready. Initializing...");
+  document.addEventListener("DOMContentLoaded", () => {
+    if (DEBUG) console.log("🌐 DOM ready. Initializing tracker.");
     getFbcFromUrl();
-    attachListenerWhenReady();
+    pollForWhatsAppButtons();
   });
 })();
 </script>
+
 
 
 
