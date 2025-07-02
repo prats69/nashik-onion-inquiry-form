@@ -60,7 +60,7 @@ const FirstTimeImporters = () => {
             </div>
             
             <TrackedWhatsAppButton 
-              eventName="First Time Importer Inquiry"
+              eventName="Contact"
               customData={{ content_name: "Get Expert Guidance" }}
               className="bg-turquoise-600 hover:bg-turquoise-700 text-white px-6 py-3"
             >
