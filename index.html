@@ -56,67 +56,72 @@
     <script type="module" src="/src/main.tsx"></script>
 
 <script>
-(function() {
-  // Wait for the DOM to fully load
-  document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM fully loaded');
-
-    // Extract fbclid from URL
+(function () {
+  function getFbcFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
-    const fbclid = urlParams.get('fbclid');
-    console.log('fbclid:', fbclid);
-
-    // Store fbclid as a cookie (_fbc format)
+    const fbclid = urlParams.get("fbclid");
+    console.log("fbclid:", fbclid);
     if (fbclid) {
       const fbc = `fb.1.${Math.floor(Date.now() / 1000)}.${fbclid}`;
-      console.log('Generated _fbc:', fbc);
+      console.log("Generated _fbc:", fbc);
       document.cookie = `_fbc=${fbc}; path=/; SameSite=Lax`;
     }
+  }
 
-    // Add event listener to WhatsApp button
-    const whatsappBtn = document.querySelector('a[href*="wa.me"], a[href*="api.whatsapp.com"]');
-    console.log('Found WhatsApp Button:', whatsappBtn);
+  function getCookieValue(name) {
+    const cookies = document.cookie.split(";").reduce((acc, cookie) => {
+      const [k, v] = cookie.trim().split("=");
+      acc[k] = v;
+      return acc;
+    }, {});
+    return cookies[name];
+  }
 
-    if (whatsappBtn) {
-      whatsappBtn.addEventListener('click', function() {
-        console.log('WhatsApp button clicked');
-        debugger;
+  function handleClick() {
+    const fbcCookie = getCookieValue("_fbc");
+    const payload = {
+      fbc: fbcCookie,
+      event_id: "whatsapp_click_" + Date.now()
+    };
+    console.log("Sending payload to Vercel API:", payload);
+    debugger;
 
-        // Get _fbc from cookies
-        const cookies = document.cookie.split(';').reduce((acc, cookie) => {
-          const [name, value] = cookie.trim().split('=');
-          acc[name] = value;
-          return acc;
-        }, {});
-        const fbcCookie = cookies['_fbc'];
-        console.log('Cookie _fbc:', fbcCookie);
+    fetch("https://v0-capi-sigma.vercel.app/api/meta-capi", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    })
+      .then((res) => res.json())
+      .then((data) => console.log("Vercel response:", data))
+      .catch((err) => console.error("Vercel error:", err));
+  }
 
-        const payload = {
-          fbc: fbcCookie,
-          event_id: 'whatsapp_click_' + Date.now()
-        };
-        console.log('Sending payload to Vercel API:', payload);
+  function attachListenerWhenReady() {
+    const observer = new MutationObserver(() => {
+      const btn = document.querySelector('a[href*="wa.me"], a[href*="api.whatsapp.com"]');
+      if (btn) {
+        console.log("WhatsApp button found:", btn);
+        btn.addEventListener("click", handleClick);
+        observer.disconnect(); // stop watching
+      } else {
+        console.log("Still waiting for WhatsApp button...");
+      }
+    });
 
-        // Send to your Vercel API
-        fetch('https://v0-capi-sigma.vercel.app/api/meta-capi', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Response from Vercel API:', data);
-        })
-        .catch(error => {
-          console.error('Error sending to Vercel API:', error);
-        });
-      });
-    } else {
-      console.warn('WhatsApp button not found.');
-    }
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    console.log("DOM ready. Initializing...");
+    getFbcFromUrl();
+    attachListenerWhenReady();
   });
 })();
 </script>
+
 
 
 
