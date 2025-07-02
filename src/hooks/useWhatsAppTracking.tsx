@@ -16,7 +16,7 @@ export const useWhatsAppTracking = () => {
   const sendConversionEvent = async (eventName: string, customData: any = {}) => {
     try {
       const payload = {
-        event_name: eventName,
+        event_name: 'Contact',
         event_time: Math.floor(Date.now() / 1000),
         action_source: 'website',
         user_data: {
