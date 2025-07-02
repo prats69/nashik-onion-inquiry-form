@@ -16,105 +16,126 @@ interface MetaConversionPayload {
 
 class WhatsAppTracker {
   private fbclid: string | null = null;
+  private isInitialized: boolean = false;
 
   constructor() {
     this.initializeTracking();
   }
 
   private initializeTracking() {
-    // Extract fbclid from URL if present
-    this.extractFbclid();
+    if (this.isInitialized) return;
     
-    // Wait for DOM to be ready, then attach listeners
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => {
+    try {
+      // Extract fbclid from URL if present
+      this.extractFbclid();
+      
+      // Wait for DOM to be ready, then attach listeners
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          this.attachListeners();
+        });
+      } else {
         this.attachListeners();
-      });
-    } else {
-      this.attachListeners();
-    }
+      }
 
-    // Re-attach listeners when new content is added (for dynamic content)
-    this.observeNewContent();
+      // Re-attach listeners when new content is added (for dynamic content)
+      this.observeNewContent();
+      
+      this.isInitialized = true;
+    } catch (error) {
+      console.error('🎯 WhatsApp Tracker: Failed to initialize:', error);
+    }
   }
 
   private extractFbclid() {
-    const urlParams = new URLSearchParams(window.location.search);
-    this.fbclid = urlParams.get('fbclid');
-    
-    if (this.fbclid) {
-      console.log('🎯 WhatsApp Tracker: Facebook click ID captured:', this.fbclid);
-    } else {
-      console.log('🎯 WhatsApp Tracker: No Facebook click ID found in URL');
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      this.fbclid = urlParams.get('fbclid');
+      
+      if (this.fbclid) {
+        console.log('🎯 WhatsApp Tracker: Facebook click ID captured:', this.fbclid);
+      } else {
+        console.log('🎯 WhatsApp Tracker: No Facebook click ID found in URL');
+      }
+    } catch (error) {
+      console.error('🎯 WhatsApp Tracker: Error extracting fbclid:', error);
     }
   }
 
   private attachListeners() {
-    // Find all links that contain wa.me
-    const whatsappLinks = document.querySelectorAll('a[href*="wa.me"], button[onclick*="wa.me"]');
-    
-    console.log(`🎯 WhatsApp Tracker: Found ${whatsappLinks.length} WhatsApp buttons to track`);
+    try {
+      // Find all links that contain wa.me
+      const whatsappLinks = document.querySelectorAll('a[href*="wa.me"], button[onclick*="wa.me"]');
+      
+      console.log(`🎯 WhatsApp Tracker: Found ${whatsappLinks.length} WhatsApp buttons to track`);
 
-    whatsappLinks.forEach((element, index) => {
-      // Remove existing listeners to avoid duplicates
-      const existingHandler = (element as any)._whatsappHandler;
-      if (existingHandler) {
-        element.removeEventListener('click', existingHandler);
-      }
-      
-      // Create new handler
-      const handler = (event: Event) => {
-        console.log(`🎯 WhatsApp Tracker: WhatsApp button ${index + 1} clicked`);
-        this.handleWhatsAppClick(event, element);
-      };
-      
-      // Store handler reference and add listener
-      (element as any)._whatsappHandler = handler;
-      element.addEventListener('click', handler);
-    });
+      whatsappLinks.forEach((element, index) => {
+        // Remove existing listeners to avoid duplicates
+        const existingHandler = (element as any)._whatsappHandler;
+        if (existingHandler) {
+          element.removeEventListener('click', existingHandler);
+        }
+        
+        // Create new handler
+        const handler = (event: Event) => {
+          console.log(`🎯 WhatsApp Tracker: WhatsApp button ${index + 1} clicked`);
+          this.handleWhatsAppClick(event, element);
+        };
+        
+        // Store handler reference and add listener
+        (element as any)._whatsappHandler = handler;
+        element.addEventListener('click', handler);
+      });
 
-    // Also check for dynamically created buttons (like in React components)
-    document.addEventListener('click', (event) => {
-      const target = event.target as HTMLElement;
-      const closestLink = target.closest('a[href*="wa.me"], button[onclick*="wa.me"]');
-      
-      if (closestLink && !closestLink.hasAttribute('data-tracked')) {
-        console.log('🎯 WhatsApp Tracker: Dynamic WhatsApp button clicked');
-        closestLink.setAttribute('data-tracked', 'true');
-        this.handleWhatsAppClick(event, closestLink);
-      }
-    });
+      // Also check for dynamically created buttons (like in React components)
+      document.addEventListener('click', (event) => {
+        const target = event.target as HTMLElement;
+        const closestLink = target.closest('a[href*="wa.me"], button[onclick*="wa.me"]');
+        
+        if (closestLink && !closestLink.hasAttribute('data-tracked')) {
+          console.log('🎯 WhatsApp Tracker: Dynamic WhatsApp button clicked');
+          closestLink.setAttribute('data-tracked', 'true');
+          this.handleWhatsAppClick(event, closestLink);
+        }
+      });
+    } catch (error) {
+      console.error('🎯 WhatsApp Tracker: Error attaching listeners:', error);
+    }
   }
 
   private observeNewContent() {
-    // Use MutationObserver to detect when new WhatsApp buttons are added
-    const observer = new MutationObserver((mutations) => {
-      let hasNewWhatsAppButtons = false;
-      
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'childList') {
-          mutation.addedNodes.forEach((node) => {
-            if (node.nodeType === Node.ELEMENT_NODE) {
-              const element = node as Element;
-              const whatsappButtons = element.querySelectorAll('a[href*="wa.me"], button[onclick*="wa.me"]');
-              if (whatsappButtons.length > 0) {
-                hasNewWhatsAppButtons = true;
+    try {
+      // Use MutationObserver to detect when new WhatsApp buttons are added
+      const observer = new MutationObserver((mutations) => {
+        let hasNewWhatsAppButtons = false;
+        
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'childList') {
+            mutation.addedNodes.forEach((node) => {
+              if (node.nodeType === Node.ELEMENT_NODE) {
+                const element = node as Element;
+                const whatsappButtons = element.querySelectorAll('a[href*="wa.me"], button[onclick*="wa.me"]');
+                if (whatsappButtons.length > 0) {
+                  hasNewWhatsAppButtons = true;
+                }
               }
-            }
-          });
+            });
+          }
+        });
+
+        if (hasNewWhatsAppButtons) {
+          console.log('🎯 WhatsApp Tracker: New WhatsApp buttons detected, re-attaching listeners');
+          setTimeout(() => this.attachListeners(), 100);
         }
       });
 
-      if (hasNewWhatsAppButtons) {
-        console.log('🎯 WhatsApp Tracker: New WhatsApp buttons detected, re-attaching listeners');
-        setTimeout(() => this.attachListeners(), 100);
-      }
-    });
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
-    });
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+    } catch (error) {
+      console.error('🎯 WhatsApp Tracker: Error setting up content observer:', error);
+    }
   }
 
   private async handleWhatsAppClick(event: Event, element: Element): Promise<void> {
@@ -189,11 +210,17 @@ class WhatsAppTracker {
 let tracker: WhatsAppTracker | null = null;
 
 export const initializeWhatsAppTracking = () => {
-  if (!tracker) {
-    tracker = new WhatsAppTracker();
-    console.log('🎯 WhatsApp Tracker: Initialized successfully');
+  try {
+    if (!tracker) {
+      tracker = new WhatsAppTracker();
+      console.log('🎯 WhatsApp Tracker: Initialized successfully');
+    }
+  } catch (error) {
+    console.error('🎯 WhatsApp Tracker: Failed to initialize:', error);
   }
 };
 
 // Auto-initialize when the module is imported
-initializeWhatsAppTracking();
+if (typeof window !== 'undefined') {
+  initializeWhatsAppTracking();
+}
