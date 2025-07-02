@@ -1,161 +1,105 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { CheckCircle, Ship, FileText, Home, MessageCircle, CreditCard } from "lucide-react";
+import { TrackedWhatsAppButton } from "@/components/TrackedWhatsAppButton";
+import { CheckCircle, Users, FileText, Truck, Award, MessageCircle } from "lucide-react";
 
 const FirstTimeImporters = () => {
-  const scrollToCalculator = () => {
-    document.getElementById('price-calculator')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const openWhatsApp = () => {
-    window.open('https://wa.me/919998694346', '_blank');
-  };
-
-  const incoterms = [
-    {
-      term: "FOB",
-      name: "Free On Board",
-      description: "We deliver goods to the port, you handle shipping & import"
-    },
-    {
-      term: "CIF",
-      name: "Cost, Insurance & Freight",
-      description: "We handle shipping & insurance, you handle import clearance"
-    },
-    {
-      term: "C&F",
-      name: "Cost & Freight",
-      description: "We handle shipping, you handle insurance & import clearance"
-    },
-    {
-      term: "DAP",
-      name: "Delivered At Place",
-      description: "We deliver to your doorstep, you only handle import duties"
-    }
+  const benefits = [
+    "Complete documentation assistance",
+    "Quality certification guidance", 
+    "Shipping and logistics support",
+    "Competitive pricing for small orders",
+    "24/7 customer support",
+    "Risk-free trial orders"
   ];
 
-  const paymentTerms = [
+  const steps = [
     {
-      term: "100% Advance",
-      description: "Full payment before shipment - ideal for first-time importers wanting complete peace of mind"
+      icon: MessageCircle,
+      title: "Contact Us",
+      description: "Reach out via WhatsApp with your requirements"
     },
     {
-      term: "30% Advance + 70% LC at Sight",
-      description: "Pay 30% upfront, remaining 70% through Letter of Credit issued by your Bank. You pay your Bank, your Bank pays our Bank once we submit the Bill of lading, Packing list, etc documents to our Bank."
+      icon: FileText,
+      title: "Documentation",
+      description: "We'll help you prepare all necessary import documents"
+    },
+    {
+      icon: Truck,
+      title: "Shipping",
+      description: "We handle logistics and ensure safe delivery"
+    },
+    {
+      icon: Award,
+      title: "Quality Assurance",
+      description: "Receive premium quality produce with certifications"
     }
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-turquoise-50 to-navy-50">
+    <section className="py-16 bg-gradient-to-br from-turquoise-50 to-navy-50">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            New to <span className="text-navy-600">Importing</span>? We've Got You Covered!
+            First Time <span className="text-turquoise-600">Importing?</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Don't let paperwork and logistics stop you from accessing premium Indian produce. 
-            We handle everything so you can focus on your business.
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            We make international trade simple for new importers with complete guidance and support
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start mb-16">
-          <div className="space-y-8">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-turquoise-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Home className="w-6 h-6 text-turquoise-600" />
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Door-to-Door Delivery</h3>
-                <p className="text-gray-600">From our farms to your warehouse - we handle the entire journey with complete transparency.</p>
-              </div>
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h3 className="text-2xl font-semibold text-gray-900 mb-6">Why Choose Us for Your First Import?</h3>
+            <div className="space-y-4 mb-8">
+              {benefits.map((benefit, index) => (
+                <div key={index} className="flex items-center gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
+                  <span className="text-gray-700">{benefit}</span>
+                </div>
+              ))}
             </div>
-
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-navy-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                <FileText className="w-6 h-6 text-navy-600" />
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Complete Documentation</h3>
-                <p className="text-gray-600">Export permits, certificates, shipping documents - we prepare everything for smooth customs clearance.</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                <CheckCircle className="w-6 h-6 text-green-600" />
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Hassle-Free Process</h3>
-                <p className="text-gray-600">24/7 support, real-time tracking, and dedicated account managers to guide you every step of the way.</p>
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button 
-                onClick={scrollToCalculator}
-                className="bg-navy-600 hover:bg-navy-700 text-white px-6 py-3 rounded-lg"
-              >
-                Get Your First Quote
-              </Button>
-              <Button 
-                onClick={openWhatsApp}
-                variant="outline"
-                className="border-turquoise-600 text-turquoise-600 hover:bg-turquoise-50 px-6 py-3 rounded-lg flex items-center gap-2"
-              >
-                <MessageCircle className="w-4 h-4" />
-                Get Expert Guidance
-              </Button>
-            </div>
+            
+            <TrackedWhatsAppButton 
+              eventName="First Time Importer Inquiry"
+              customData={{ content_name: "Get Expert Guidance" }}
+              className="bg-turquoise-600 hover:bg-turquoise-700 text-white px-6 py-3"
+            >
+              Get Expert Guidance
+            </TrackedWhatsAppButton>
           </div>
 
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Choose Your Preferred Shipping Terms</h3>
-              <div className="space-y-4">
-                {incoterms.map((incoterm, index) => (
-                  <Card key={index} className="hover:shadow-lg transition-shadow">
-                    <CardContent className="p-6">
-                      <div className="flex items-start gap-4">
-                        <div className="w-10 h-10 bg-navy-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <Ship className="w-5 h-5 text-navy-600" />
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-2 mb-2">
-                            <span className="font-bold text-navy-600 text-lg">{incoterm.term}</span>
-                            <span className="text-gray-500">•</span>
-                            <span className="font-medium text-gray-700">{incoterm.name}</span>
-                          </div>
-                          <p className="text-gray-600">{incoterm.description}</p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Flexible Payment Terms</h3>
-              <div className="space-y-4">
-                {paymentTerms.map((payment, index) => (
-                  <Card key={index} className="hover:shadow-lg transition-shadow">
-                    <CardContent className="p-6">
-                      <div className="flex items-start gap-4">
-                        <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <CreditCard className="w-5 h-5 text-green-600" />
-                        </div>
-                        <div>
-                          <h4 className="font-bold text-green-600 text-lg mb-2">{payment.term}</h4>
-                          <p className="text-gray-600">{payment.description}</p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+          <div className="bg-white p-8 rounded-2xl shadow-lg">
+            <h3 className="text-2xl font-semibold text-gray-900 mb-6 text-center">Simple 4-Step Process</h3>
+            <div className="space-y-6">
+              {steps.map((step, index) => (
+                <div key={index} className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 bg-turquoise-100 rounded-full flex items-center justify-center">
+                    <step.icon className="w-6 h-6 text-turquoise-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-1">{step.title}</h4>
+                    <p className="text-gray-600 text-sm">{step.description}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
+        </div>
+
+        <div className="mt-12 text-center bg-white p-8 rounded-2xl shadow-lg">
+          <Users className="w-16 h-16 text-turquoise-600 mx-auto mb-4" />
+          <h3 className="text-2xl font-semibold text-gray-900 mb-4">Join 500+ Successful Importers</h3>
+          <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+            From small businesses to large enterprises, we've helped importers worldwide establish reliable supply chains
+          </p>
+          
+          <TrackedWhatsAppButton 
+            eventName="Success Story Inquiry"
+            customData={{ content_name: "Start Your Success Story" }}
+            className="bg-navy-600 hover:bg-navy-700 text-white px-8 py-3"
+          >
+            Start Your Success Story
+          </TrackedWhatsAppButton>
         </div>
       </div>
     </section>
