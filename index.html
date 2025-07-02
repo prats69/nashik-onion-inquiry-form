@@ -56,76 +56,68 @@
     <script type="module" src="/src/main.tsx"></script>
 
 <script>
-// Store fbclid to _fbc cookie
-(function () {
-  const params = new URLSearchParams(window.location.search);
-  const fbclid = params.get('fbclid');
-  if (fbclid) {
-    const fbc = `fb.1.${Math.floor(Date.now() / 1000)}.${fbclid}`;
-    document.cookie = `_fbc=${fbc}; path=/; max-age=7776000`;
-  }
-})();
+(function() {
+  // Wait for the DOM to fully load
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM fully loaded');
 
-function getCookie(name) {
-  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-  return match ? match[2] : null;
-}
+    // Extract fbclid from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const fbclid = urlParams.get('fbclid');
+    console.log('fbclid:', fbclid);
 
-function generateEventId() {
-  return Math.random().toString(36).substr(2, 16);
-}
+    // Store fbclid as a cookie (_fbc format)
+    if (fbclid) {
+      const fbc = `fb.1.${Math.floor(Date.now() / 1000)}.${fbclid}`;
+      console.log('Generated _fbc:', fbc);
+      document.cookie = `_fbc=${fbc}; path=/; SameSite=Lax`;
+    }
 
-// Button selectors (based on your HTML)
-const selectors = [
-  'button[aria-label="Contact us on WhatsApp"]', // 1st button
-  'button:has(svg.lucide-message-circle):contains("Start Your Success Story")', // 2nd button
-  'button:has(svg.lucide-message-circle):contains("Get Expert Guidance")', // 3rd button
-  'button:has(svg.lucide-message-circle):contains("Get Final Quote on WhatsApp")' // 4th button
-];
+    // Add event listener to WhatsApp button
+    const whatsappBtn = document.querySelector('a[href*="wa.me"], a[href*="api.whatsapp.com"]');
+    console.log('Found WhatsApp Button:', whatsappBtn);
 
-// Safe fallback for text-matching buttons
-function findButtons() {
-  const matches = [];
-  document.querySelectorAll('button').forEach(btn => {
-    const text = btn.textContent?.trim();
-    if (
-      text === 'Start Your Success Story' ||
-      text === 'Get Expert Guidance' ||
-      text === 'Get Final Quote on WhatsApp'
-    ) {
-      matches.push(btn);
+    if (whatsappBtn) {
+      whatsappBtn.addEventListener('click', function() {
+        console.log('WhatsApp button clicked');
+        debugger;
+
+        // Get _fbc from cookies
+        const cookies = document.cookie.split(';').reduce((acc, cookie) => {
+          const [name, value] = cookie.trim().split('=');
+          acc[name] = value;
+          return acc;
+        }, {});
+        const fbcCookie = cookies['_fbc'];
+        console.log('Cookie _fbc:', fbcCookie);
+
+        const payload = {
+          fbc: fbcCookie,
+          event_id: 'whatsapp_click_' + Date.now()
+        };
+        console.log('Sending payload to Vercel API:', payload);
+
+        // Send to your Vercel API
+        fetch('https://v0-capi-sigma.vercel.app/api/meta-capi', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Response from Vercel API:', data);
+        })
+        .catch(error => {
+          console.error('Error sending to Vercel API:', error);
+        });
+      });
+    } else {
+      console.warn('WhatsApp button not found.');
     }
   });
-
-  const mainButton = document.querySelector('button[aria-label="Contact us on WhatsApp"]');
-  if (mainButton) matches.push(mainButton);
-
-  return matches;
-}
-
-// Attach event handler
-window.addEventListener('DOMContentLoaded', () => {
-  const buttons = findButtons();
-  buttons.forEach(button => {
-    button.addEventListener('click', () => {
-      const fbc = getCookie('_fbc');
-      const event_id = generateEventId();
-
-      fetch("https://v0-capi-sigma.vercel.app/api/meta-capi", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          event_name: "Contact",
-          fbc: fbc,
-          event_id: event_id,
-          event_source_url: window.location.href,
-          user_agent: navigator.userAgent
-        })
-      });
-    });
-  });
-});
+})();
 </script>
+
 
 
   </body>
