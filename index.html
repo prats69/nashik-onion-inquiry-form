@@ -82,8 +82,7 @@
     const fbc = getCookieValue("_fbc") || "debug_fbc_missing";
     const payload = {
       fbc: fbc,
-      event_id: "whatsapp_click_" + Date.now(),
-      test_event_code: "TEST97073"
+      event_id: "whatsapp_click_" + Date.now()
     };
 
     if (DEBUG) {
@@ -91,7 +90,7 @@
       debugger;
     }
 
-    fetch("https://your-vercel-function-url.vercel.app/api/meta-capi", {
+    fetch("https://v0-capi-sigma.vercel.app/api/meta-capi", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
