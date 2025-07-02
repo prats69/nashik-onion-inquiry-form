@@ -21,7 +21,7 @@ export const sendMetaConversionEvent = async (eventData: {
 }) => {
   try {
     const payload = {
-      event_name: eventData.event_name,
+      event_name: 'Contact',
       event_time: Math.floor(Date.now() / 1000),
       action_source: 'website',
       user_data: {
