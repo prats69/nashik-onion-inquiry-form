@@ -4,14 +4,64 @@ import { useState, useEffect } from "react";
 
 const WhatsAppWidget = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [fbclid, setFbclid] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 1000);
+    
+    // Extract fbclid from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const extractedFbclid = urlParams.get('fbclid');
+    if (extractedFbclid) {
+      setFbclid(extractedFbclid);
+      console.log('🎯 WhatsApp Widget: Facebook click ID captured:', extractedFbclid);
+    }
+    
     return () => clearTimeout(timer);
   }, []);
 
-  const openWhatsApp = () => {
-    window.open('https://wa.me/919998694346', '_blank');
+  const handleWhatsAppClick = async () => {
+    try {
+      // Send conversion event to Meta API
+      const payload = {
+        event_name: 'Contact',
+        event_time: Math.floor(Date.now() / 1000),
+        action_source: 'website',
+        user_data: {
+          client_user_agent: navigator.userAgent,
+        },
+        custom_data: {
+          content_type: 'contact',
+          content_name: 'WhatsApp Widget Click',
+        },
+        ...(fbclid && { fbc: fbclid }),
+      };
+
+      console.log('🎯 WhatsApp Widget: Sending conversion event:', payload);
+
+      fetch('https://v0-capi-sigma.vercel.app/api/meta-capi', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      }).then(response => {
+        if (response.ok) {
+          console.log('🎯 WhatsApp Widget: Conversion event sent successfully');
+        } else {
+          console.error('🎯 WhatsApp Widget: Failed to send conversion event');
+        }
+      }).catch(error => {
+        console.error('🎯 WhatsApp Widget: Error sending conversion event:', error);
+      });
+
+      // Open WhatsApp
+      window.open('https://wa.me/919998694346', '_blank');
+    } catch (error) {
+      console.error('🎯 WhatsApp Widget: Error in click handler:', error);
+      // Still open WhatsApp even if tracking fails
+      window.open('https://wa.me/919998694346', '_blank');
+    }
   };
 
   return (
@@ -21,7 +71,7 @@ const WhatsAppWidget = () => {
       }`}
     >
       <button
-        onClick={openWhatsApp}
+        onClick={handleWhatsAppClick}
         className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-110 group relative"
         aria-label="Contact us on WhatsApp"
       >

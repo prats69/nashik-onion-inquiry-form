@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Calculator, MessageCircle, Info, Globe } from "lucide-react";
 import { PriceCalculatorForm } from "@/components/calculator/PriceCalculatorForm";
@@ -21,8 +20,8 @@ const PriceCalculator = () => {
   const [exchangeRates, setExchangeRates] = useState<ExchangeRates>({});
   const [isLoading, setIsLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
+  const [fbclid, setFbclid] = useState<string | null>(null);
 
-  // Base prices per kg in INR (hidden from UI)
   const basePrices = {
     "40-45mm": 14.5,
     "45mm+": 16.5,
@@ -30,17 +29,15 @@ const PriceCalculator = () => {
     "55mm+": 18.5,
   };
 
-  // Updated packaging modifiers to include jute bags
   const packagingModifiers = {
     "5kg-red-mesh": 1.00,
     "10kg-red-mesh": 0.00,
     "18kg-red-mesh": -0.25,
     "20kg-red-mesh": -0.25,
-    "25kg-jute": -0.25,  // Same as 20kg red mesh
-    "50kg-jute": -0.25,  // Same as 20kg red mesh
+    "25kg-jute": -0.25,
+    "50kg-jute": -0.25,
   };
 
-  // Currency symbols and formatting
   const currencySymbols = {
     INR: "₹",
     USD: "$",
@@ -56,7 +53,6 @@ const PriceCalculator = () => {
     MVR: "ރ.",
   };
 
-  // Translations object
   const translations = {
     en: {
       title: "Onion Price Calculator",
@@ -278,7 +274,6 @@ const PriceCalculator = () => {
 
   const t = translations[language as keyof typeof translations] || translations.en;
 
-  // Fetch exchange rates
   useEffect(() => {
     const fetchExchangeRates = async () => {
       setIsLoading(true);
@@ -307,6 +302,13 @@ const PriceCalculator = () => {
     };
 
     fetchExchangeRates();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const extractedFbclid = urlParams.get('fbclid');
+    if (extractedFbclid) {
+      setFbclid(extractedFbclid);
+      console.log('🎯 Price Calculator: Facebook click ID captured:', extractedFbclid);
+    }
   }, []);
 
   const calculatePrice = () => {
@@ -315,17 +317,12 @@ const PriceCalculator = () => {
     const basePrice = basePrices[onionSize as keyof typeof basePrices];
     const packagingModifier = packagingModifiers[packaging as keyof typeof packagingModifiers];
     
-    // Calculate price per kg with packaging modifier
     const pricePerKg = basePrice + packagingModifier;
-    
-    // Add 15% margin
     const finalPricePerKg = pricePerKg * 1.15;
     
-    // Convert to selected currency
     const exchangeRate = exchangeRates[currency] || 1;
     const convertedPricePerKg = finalPricePerKg * exchangeRate;
     
-    // Calculate per ton (1000 kg) and per container (29 tons)
     const perKg = convertedPricePerKg;
     const perTon = convertedPricePerKg * 1000;
     const perContainer = convertedPricePerKg * 29000;
@@ -371,16 +368,54 @@ Thank you! 🙏`;
     return `https://wa.me/919998694346?text=${encodedMessage}`;
   };
 
-  const openWhatsApp = () => {
+  const openWhatsApp = async () => {
     if (onionSize && packaging && paymentTerms && paymentTerms !== "credit") {
-      window.open(generateWhatsAppMessage(), '_blank');
+      try {
+        const payload = {
+          event_name: 'Lead',
+          event_time: Math.floor(Date.now() / 1000),
+          action_source: 'website',
+          user_data: {
+            client_user_agent: navigator.userAgent,
+          },
+          custom_data: {
+            content_type: 'quote_request',
+            content_name: 'Price Calculator Quote Request',
+            value: perContainer,
+            currency: currency,
+          },
+          ...(fbclid && { fbc: fbclid }),
+        };
+
+        console.log('🎯 Price Calculator: Sending conversion event:', payload);
+
+        fetch('https://v0-capi-sigma.vercel.app/api/meta-capi', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        }).then(response => {
+          if (response.ok) {
+            console.log('🎯 Price Calculator: Conversion event sent successfully');
+          } else {
+            console.error('🎯 Price Calculator: Failed to send conversion event');
+          }
+        }).catch(error => {
+          console.error('🎯 Price Calculator: Error sending conversion event:', error);
+        });
+
+        window.open(generateWhatsAppMessage(), '_blank');
+      } catch (error) {
+        console.error('🎯 Price Calculator: Error in WhatsApp handler:', error);
+        window.open(generateWhatsAppMessage(), '_blank');
+      }
     }
   };
 
   const handleCalculatePricing = () => {
     if (onionSize && packaging && currency && shippingPort && quantity && orderTiming && incoterms && paymentTerms) {
       setShowResults(true);
-      // Scroll to results section
       setTimeout(() => {
         const resultsElement = document.getElementById('price-results');
         if (resultsElement) {
@@ -396,7 +431,6 @@ Thank you! 🙏`;
     <div className="min-h-screen bg-gradient-to-br from-navy-50 via-white to-turquoise-50">
       <div className="container mx-auto px-4 py-12">
         <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {/* Calculator Form */}
           <PriceCalculatorForm
             onionSize={onionSize}
             setOnionSize={setOnionSize}
@@ -421,7 +455,6 @@ Thank you! 🙏`;
             onCalculate={handleCalculatePricing}
           />
 
-          {/* Results */}
           {showResults && (
             <div id="price-results">
               {paymentTerms === "credit" ? (
@@ -452,7 +485,6 @@ Thank you! 🙏`;
           )}
         </div>
 
-        {/* Features */}
         <div className="mt-16 grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
           <div className="text-center">
             <div className="w-16 h-16 bg-navy-100 rounded-full flex items-center justify-center mx-auto mb-4">
