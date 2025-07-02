@@ -54,5 +54,79 @@
     src="https://www.facebook.com/tr?id=1250273303229376&ev=PageView&noscript=1"
     /></noscript>
     <script type="module" src="/src/main.tsx"></script>
+
+<script>
+// Store fbclid to _fbc cookie
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  const fbclid = params.get('fbclid');
+  if (fbclid) {
+    const fbc = `fb.1.${Math.floor(Date.now() / 1000)}.${fbclid}`;
+    document.cookie = `_fbc=${fbc}; path=/; max-age=7776000`;
+  }
+})();
+
+function getCookie(name) {
+  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return match ? match[2] : null;
+}
+
+function generateEventId() {
+  return Math.random().toString(36).substr(2, 16);
+}
+
+// Button selectors (based on your HTML)
+const selectors = [
+  'button[aria-label="Contact us on WhatsApp"]', // 1st button
+  'button:has(svg.lucide-message-circle):contains("Start Your Success Story")', // 2nd button
+  'button:has(svg.lucide-message-circle):contains("Get Expert Guidance")', // 3rd button
+  'button:has(svg.lucide-message-circle):contains("Get Final Quote on WhatsApp")' // 4th button
+];
+
+// Safe fallback for text-matching buttons
+function findButtons() {
+  const matches = [];
+  document.querySelectorAll('button').forEach(btn => {
+    const text = btn.textContent?.trim();
+    if (
+      text === 'Start Your Success Story' ||
+      text === 'Get Expert Guidance' ||
+      text === 'Get Final Quote on WhatsApp'
+    ) {
+      matches.push(btn);
+    }
+  });
+
+  const mainButton = document.querySelector('button[aria-label="Contact us on WhatsApp"]');
+  if (mainButton) matches.push(mainButton);
+
+  return matches;
+}
+
+// Attach event handler
+window.addEventListener('DOMContentLoaded', () => {
+  const buttons = findButtons();
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      const fbc = getCookie('_fbc');
+      const event_id = generateEventId();
+
+      fetch("https://v0-capi-sigma.vercel.app/api/meta-capi", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          event_name: "Contact",
+          fbc: fbc,
+          event_id: event_id,
+          event_source_url: window.location.href,
+          user_agent: navigator.userAgent
+        })
+      });
+    });
+  });
+});
+</script>
+
+
   </body>
 </html>
