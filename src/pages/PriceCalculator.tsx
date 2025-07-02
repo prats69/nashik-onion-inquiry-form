@@ -246,7 +246,7 @@ const PriceCalculator = () => {
 
   const openWhatsApp = async () => {
     if (onionSize && packaging && paymentTerms && paymentTerms !== "credit") {
-      await sendConversionEvent('Lead', {
+      await sendConversionEvent('Contact', {
         content_type: 'quote_request',
         content_name: 'Price Calculator Quote Request',
         value: perContainer,
