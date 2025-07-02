@@ -55,55 +55,6 @@
     /></noscript>
     <script type="module" src="/src/main.tsx"></script>
 
-<script>
-  (function () {
-    function attachListeners() {
-      const whatsappBtns = document.querySelectorAll("a[href*='wa.me']");
 
-      if (whatsappBtns.length === 0) {
-        console.warn("❌ WhatsApp button(s) not found");
-        return;
-      }
-
-      whatsappBtns.forEach((btn) => {
-        console.log("✅ Attached listener to:", btn);
-        btn.addEventListener("click", async function () {
-          const payload = {
-            event_name: "WhatsAppButtonClicked",
-            event_source_url: window.location.href,
-            action_source: "website",
-            event_time: Math.floor(Date.now() / 1000),
-            event_id: crypto.randomUUID(),
-            user_data: {}
-          };
-
-          console.log("🚀 Sending payload to CAPI", payload);
-
-          try {
-            const response = await fetch("https://v0-capi-sigma.vercel.app/api/meta-capi", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(payload),
-            });
-
-            const result = await response.json();
-            console.log("📬 CAPI response:", result);
-          } catch (error) {
-            console.error("❌ Error sending to CAPI", error);
-          }
-        });
-      });
-    }
-
-    // Wait for DOM to be ready
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", attachListeners);
-    } else {
-      attachListeners();
-    }
-  })();
-</script>
   </body>
 </html>
