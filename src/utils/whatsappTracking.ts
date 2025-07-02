@@ -57,13 +57,20 @@ class WhatsAppTracker {
 
     whatsappLinks.forEach((element, index) => {
       // Remove existing listeners to avoid duplicates
-      element.removeEventListener('click', this.handleWhatsAppClick);
+      const existingHandler = (element as any)._whatsappHandler;
+      if (existingHandler) {
+        element.removeEventListener('click', existingHandler);
+      }
       
-      // Add click listener
-      element.addEventListener('click', (event) => {
+      // Create new handler
+      const handler = (event: Event) => {
         console.log(`🎯 WhatsApp Tracker: WhatsApp button ${index + 1} clicked`);
         this.handleWhatsAppClick(event, element);
-      });
+      };
+      
+      // Store handler reference and add listener
+      (element as any)._whatsappHandler = handler;
+      element.addEventListener('click', handler);
     });
 
     // Also check for dynamically created buttons (like in React components)
@@ -110,7 +117,7 @@ class WhatsAppTracker {
     });
   }
 
-  private handleWhatsAppClick = async (event: Event, element: Element) => {
+  private async handleWhatsAppClick(event: Event, element: Element): Promise<void> {
     try {
       // Get the WhatsApp URL
       let whatsappUrl = '';
@@ -163,7 +170,7 @@ class WhatsAppTracker {
     } catch (error) {
       console.error('🎯 WhatsApp Tracker: Error sending conversion event:', error);
     }
-  };
+  }
 
   private async getClientIP(): Promise<string | undefined> {
     try {
