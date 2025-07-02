@@ -64,8 +64,8 @@ class WhatsAppTracker {
 
   private attachListeners() {
     try {
-      // Find all links that contain wa.me
-      const whatsappLinks = document.querySelectorAll('a[href*="wa.me"], button[onclick*="wa.me"]');
+      // Find all links that contain wa.me (avoid onclick attributes to prevent CSP issues)
+      const whatsappLinks = document.querySelectorAll('a[href*="wa.me"]');
       
       console.log(`🎯 WhatsApp Tracker: Found ${whatsappLinks.length} WhatsApp buttons to track`);
 
@@ -90,7 +90,7 @@ class WhatsAppTracker {
       // Also check for dynamically created buttons (like in React components)
       document.addEventListener('click', (event) => {
         const target = event.target as HTMLElement;
-        const closestLink = target.closest('a[href*="wa.me"], button[onclick*="wa.me"]');
+        const closestLink = target.closest('a[href*="wa.me"]');
         
         if (closestLink && !closestLink.hasAttribute('data-tracked')) {
           console.log('🎯 WhatsApp Tracker: Dynamic WhatsApp button clicked');
@@ -114,7 +114,7 @@ class WhatsAppTracker {
             mutation.addedNodes.forEach((node) => {
               if (node.nodeType === Node.ELEMENT_NODE) {
                 const element = node as Element;
-                const whatsappButtons = element.querySelectorAll('a[href*="wa.me"], button[onclick*="wa.me"]');
+                const whatsappButtons = element.querySelectorAll('a[href*="wa.me"]');
                 if (whatsappButtons.length > 0) {
                   hasNewWhatsAppButtons = true;
                 }
@@ -144,10 +144,6 @@ class WhatsAppTracker {
       let whatsappUrl = '';
       if (element.tagName === 'A') {
         whatsappUrl = (element as HTMLAnchorElement).href;
-      } else if (element.getAttribute('onclick')) {
-        const onclickContent = element.getAttribute('onclick') || '';
-        const urlMatch = onclickContent.match(/https:\/\/wa\.me\/[^'"]*/);
-        whatsappUrl = urlMatch ? urlMatch[0] : '';
       }
 
       // Prepare payload for Meta Conversions API
