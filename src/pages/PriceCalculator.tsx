@@ -246,17 +246,28 @@ const PriceCalculator = () => {
 
   const openWhatsApp = async () => {
     if (onionSize && packaging && paymentTerms && paymentTerms !== "credit") {
-      await sendConversionEvent('Contact', {
-        content_type: 'quote_request',
-        content_name: 'Price Calculator Quote Request',
-        value: perContainer,
-        currency: currency,
-      });
+      try {
+        console.log('🎯 Price Calculator WhatsApp button clicked');
+        
+        await sendConversionEvent('Price Calculator Quote Request', {
+          content_type: 'quote_request',
+          content_name: 'Price Calculator Quote Request',
+          value: perContainer,
+          currency: currency,
+        });
 
-      window.open(generateWhatsAppMessage(
-        onionSize, packaging, quantity, orderTiming, incoterms, 
-        paymentTerms, shippingPort, perTon, perContainer, currency, formatCurrency
-      ), '_blank');
+        window.open(generateWhatsAppMessage(
+          onionSize, packaging, quantity, orderTiming, incoterms, 
+          paymentTerms, shippingPort, perTon, perContainer, currency, formatCurrency
+        ), '_blank');
+      } catch (error) {
+        console.error('🎯 Error in Price Calculator WhatsApp:', error);
+        // Still open WhatsApp even if tracking fails
+        window.open(generateWhatsAppMessage(
+          onionSize, packaging, quantity, orderTiming, incoterms, 
+          paymentTerms, shippingPort, perTon, perContainer, currency, formatCurrency
+        ), '_blank');
+      }
     }
   };
 

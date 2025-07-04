@@ -1,58 +1,24 @@
 
-import { MessageCircle } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useWhatsAppTracking } from "@/hooks/useWhatsAppTracking";
 
 const WhatsAppWidget = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [fbclid, setFbclid] = useState<string | null>(null);
+  const { sendConversionEvent } = useWhatsAppTracking();
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 1000);
-    
-    // Extract fbclid from URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const extractedFbclid = urlParams.get('fbclid');
-    if (extractedFbclid) {
-      setFbclid(extractedFbclid);
-      console.log('🎯 WhatsApp Widget: Facebook click ID captured:', extractedFbclid);
-    }
-    
     return () => clearTimeout(timer);
   }, []);
 
   const handleWhatsAppClick = async () => {
     try {
-      // Send conversion event to Meta API
-      const payload = {
-        event_name: 'Contact',
-        event_time: Math.floor(Date.now() / 1000),
-        action_source: 'website',
-        user_data: {
-          client_user_agent: navigator.userAgent,
-        },
-        custom_data: {
-          content_type: 'contact',
-          content_name: 'WhatsApp Widget Click',
-        },
-        ...(fbclid && { fbc: fbclid }),
-      };
-
-      console.log('🎯 WhatsApp Widget: Sending conversion event:', payload);
-
-      fetch('https://v0-capi-sigma.vercel.app/api/meta-capi', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      }).then(response => {
-        if (response.ok) {
-          console.log('🎯 WhatsApp Widget: Conversion event sent successfully');
-        } else {
-          console.error('🎯 WhatsApp Widget: Failed to send conversion event');
-        }
-      }).catch(error => {
-        console.error('🎯 WhatsApp Widget: Error sending conversion event:', error);
+      console.log('🎯 WhatsApp Widget clicked');
+      
+      // Send conversion event with proper tracking
+      await sendConversionEvent('WhatsApp Widget Click', {
+        content_type: 'contact',
+        content_name: 'WhatsApp Widget Click',
       });
 
       // Open WhatsApp

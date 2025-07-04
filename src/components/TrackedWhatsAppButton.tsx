@@ -22,13 +22,21 @@ export const TrackedWhatsAppButton = ({
   const { sendConversionEvent } = useWhatsAppTracking();
 
   const handleClick = async () => {
-    await sendConversionEvent(eventName, {
-      content_type: 'contact',
-      content_name: eventName,
-      ...customData
-    });
-    
-    window.open(whatsappUrl, '_blank');
+    try {
+      console.log('🎯 Tracked WhatsApp Button clicked:', eventName);
+      
+      await sendConversionEvent(eventName, {
+        content_type: 'contact',
+        content_name: eventName,
+        ...customData
+      });
+      
+      window.open(whatsappUrl, '_blank');
+    } catch (error) {
+      console.error('🎯 Error in TrackedWhatsAppButton:', error);
+      // Still open WhatsApp even if tracking fails
+      window.open(whatsappUrl, '_blank');
+    }
   };
 
   return (
