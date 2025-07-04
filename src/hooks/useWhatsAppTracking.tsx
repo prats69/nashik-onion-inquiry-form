@@ -71,7 +71,7 @@ export const useWhatsAppTracking = () => {
 
       console.log('🎯 Sending CAPI Contact event:', capiPayload);
 
-      const response = await fetch('https://v0-capi-sigma.vercel.app/api/contact', {
+      const response = await fetch('https://v0-capi-sigma.vercel.app/api/meta-capi', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
